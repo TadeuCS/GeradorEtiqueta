@@ -37,8 +37,18 @@ public class Produto implements Serializable {
     private String descricao;
     @Column(name = "PRECO")
     private Double preco;
+    @Column(name = "PRECO2")
+    private Double preco2;
 
     public Produto() {
+    }
+
+    public Double getPreco2() {
+        return preco2;
+    }
+
+    public void setPreco2(Double preco2) {
+        this.preco2 = preco2;
     }
 
     public String getCodprod() {
