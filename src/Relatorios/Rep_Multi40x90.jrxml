@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" columnCount="2" pageWidth="282" pageHeight="216" columnWidth="137" leftMargin="7" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="b7b0e7e9-589c-41bc-899d-d78403d33fd4">
+	<property name="ireport.zoom" value="1.6934217901613318"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="26"/>
+	<field name="REFERENCIA" class="java.lang.String"/>
+	<field name="PRECO" class="java.lang.Double"/>
+	<field name="PRECO2" class="java.lang.Double"/>
+	<field name="PERCENT" class="java.lang.Double"/>
+	<field name="DIFERENCA" class="java.lang.Double"/>
+	<field name="divisaoResto" class="java.lang.String"/>
+	<field name="numParcelas" class="java.lang.Integer"/>
+	<detail>
+		<band height="212" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="92" width="25" height="15" backcolor="#CCCCCC" uuid="580d5375-0b9a-49d3-b228-c5fd7a2106a7"/>
+				<textElement>
+					<font fontName="Arial Black" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ref:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="114" width="52" height="15" backcolor="#CCCCCC" uuid="ee011de9-5cd1-4dc8-8749-538451d9e3b5"/>
+				<textElement>
+					<font fontName="Arial Black" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[A Prazo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="148" width="58" height="15" backcolor="#CCCCCC" uuid="c32c8faa-b273-46f6-b8cd-d80dcadee526"/>
+				<textElement>
+					<font fontName="Arial Black" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[A Vista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="165" width="58" height="15" backcolor="#CCCCCC" uuid="51da9eb3-5310-4cd4-9bb2-b2498097441b"/>
+				<textElement>
+					<font fontName="Arial Black" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Desc. Vista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="23" y="182" width="58" height="28" backcolor="#CCCCCC" uuid="08070446-7d56-4970-9c84-a32f39362f8d"/>
+				<textElement>
+					<font fontName="Arial Black" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Diferença de a Prazo e a vista]]></text>
+			</staticText>
+			<image>
+				<reportElement x="22" y="24" width="98" height="51" backcolor="#FFFFFF" uuid="f859c530-eac7-42e0-b326-d483a48e89d8"/>
+				<imageExpression><![CDATA["C:\\Reswincs\\logoCasaAraujo.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="75" y="127" width="56" height="1" backcolor="#FFFFFF" uuid="d991f276-0542-4f0b-bbf5-38b6d403518e"/>
+			</line>
+			<line>
+				<reportElement x="27" y="144" width="38" height="1" backcolor="#FFFFFF" uuid="454c9905-433c-4215-9888-b10176a94b2e"/>
+			</line>
+			<staticText>
+				<reportElement x="67" y="130" width="5" height="13" backcolor="#FFFFFF" uuid="949857f7-e0e4-4f26-a969-f37ac2c03eac"/>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<line>
+				<reportElement x="75" y="144" width="56" height="1" backcolor="#FFFFFF" uuid="32b23633-0881-4442-bb5a-1993db5bd44a"/>
+			</line>
+			<line>
+				<reportElement x="80" y="159" width="51" height="1" backcolor="#FFFFFF" uuid="8790d0dc-e6bd-4474-b353-7f0793fb2471"/>
+			</line>
+			<line>
+				<reportElement x="80" y="177" width="51" height="1" backcolor="#FFFFFF" uuid="76c5ff27-4ef4-4ae2-8e16-02affb1cd973"/>
+			</line>
+			<line>
+				<reportElement x="81" y="205" width="51" height="1" backcolor="#FFFFFF" uuid="994f6566-bac4-4f0d-a04c-fedbf6f23a66"/>
+			</line>
+			<textField>
+				<reportElement x="48" y="92" width="84" height="15" backcolor="#FFFFFF" uuid="3cb17631-655f-4ae0-a00f-41ba5a902e86"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REFERENCIA}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="23" y="75" width="109" height="17" backcolor="#FFFFFF" uuid="2958f62c-c89d-4390-8d4e-970f334677a2"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="75" y="113" width="56" height="14" backcolor="#FFFFFF" uuid="73461643-45d2-4614-be2d-aed9b850113b"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECO2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="129" width="40" height="15" backcolor="#FFFFFF" uuid="56fe3fec-ea94-43d3-a38d-093030e3e5de"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numParcelas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="75" y="129" width="56" height="15" backcolor="#FFFFFF" uuid="9be665e0-daab-421e-bdab-9a3db644c4b8"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECO2}/$F{numParcelas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="81" y="145" width="50" height="14" backcolor="#FFFFFF" uuid="20cac91b-d0e1-43df-a490-208cf10ce113"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##%">
+				<reportElement x="81" y="163" width="50" height="14" backcolor="#FFFFFF" uuid="734d56dc-44ef-43dd-ace3-aec37b6037a2"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERCENT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="81" y="192" width="50" height="13" backcolor="#FFFFFF" uuid="e187c1a2-25ad-4c68-850c-5b1e4d2de720"/>
+				<textElement>
+					<font size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIFERENCA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

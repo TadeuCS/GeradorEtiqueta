@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="oi2" columnCount="3" pageWidth="288" pageHeight="180" columnWidth="94" leftMargin="5" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4588529d-a2de-481c-83aa-092cccd966dd">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="REFERENCIA" class="java.lang.String"/>
+	<field name="PRECO" class="java.lang.Double"/>
+	<field name="PRECO2" class="java.lang.Double"/>
+	<field name="PERCENT" class="java.lang.Double"/>
+	<field name="DIFERENCA" class="java.lang.Double"/>
+	<field name="divisaoResto" class="java.lang.String"/>
+	<field name="numParcelas" class="java.lang.Integer"/>
+	<detail>
+		<band height="178" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="69" width="17" height="15" backcolor="#CCCCCC" uuid="033dd7d0-774c-43cf-bb59-de2e1a7c6d2e"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ref:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="86" width="48" height="14" backcolor="#CCCCCC" uuid="354b4a6e-4cef-41f0-aae1-24013e81e10d"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A Prazo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="9" y="129" width="43" height="11" backcolor="#CCCCCC" uuid="eca8e403-0f59-4b0d-a593-28a0f893d682"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A Vista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="9" y="141" width="43" height="12" backcolor="#CCCCCC" uuid="219d6e2e-0925-44b4-a3f5-3fe524005b1a"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desc. Vista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="9" y="154" width="49" height="20" backcolor="#CCCCCC" uuid="8df26bd2-e6e4-4675-8483-fb2fdc07a24c"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Diferença de a Prazo e a vista]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="6" width="86" height="46" uuid="fa36467d-3600-4244-8384-827c81ce1848"/>
+				<imageExpression><![CDATA["C:\\Reswincs\\logoCasaAraujo.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="58" y="112" width="37" height="1" uuid="494c9bc0-029e-46b8-a24d-f41de4c4397d"/>
+			</line>
+			<line>
+				<reportElement x="10" y="124" width="37" height="1" uuid="20cbcd55-8721-467f-a665-90e8257c4b73"/>
+			</line>
+			<line>
+				<reportElement x="58" y="124" width="37" height="1" uuid="ef86c63f-31f2-49c1-8749-ab1a3bd5d591"/>
+			</line>
+			<line>
+				<reportElement x="53" y="138" width="42" height="1" uuid="616dba43-aa1c-4485-98a1-cb4a3eee4fc7"/>
+			</line>
+			<line>
+				<reportElement x="54" y="151" width="42" height="1" uuid="2a245434-5424-46c8-ba22-1ebf2c2fe7ef"/>
+			</line>
+			<line>
+				<reportElement x="59" y="170" width="37" height="1" uuid="ad0aa47c-a090-46bc-a59b-6055d73f1c82"/>
+			</line>
+			<staticText>
+				<reportElement x="44" y="105" width="10" height="8" uuid="41d928eb-4585-4da0-96f3-8d12f191dfb9"/>
+				<textElement>
+					<font fontName="Arial Black" size="5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="68" width="71" height="16" uuid="191c1b4e-9e88-46cf-bf04-18adfdbfea7d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REFERENCIA}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="4" y="55" width="85" height="14" uuid="2ae1bdfc-a1bf-4be9-ad4b-3f63267fdf3b"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="52" y="87" width="38" height="12" uuid="a8a85f32-172a-4397-9015-90fa8bb0a187"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECO2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="102" width="37" height="11" uuid="71bc92d8-5791-4754-8ca1-3d47529ef300"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numParcelas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="56" y="102" width="38" height="11" uuid="9775bd4b-6e8c-417c-839f-403f29da09e9"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECO2}/$F{numParcelas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="52" y="127" width="43" height="11" uuid="0e41209f-879f-4d42-bc9e-ca00f5d1217d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##%">
+				<reportElement x="53" y="140" width="42" height="11" uuid="7f96704d-230e-45e3-b7f6-9a447b7d67c6"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERCENT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="59" y="154" width="36" height="15" uuid="b6e7c738-a022-4009-84e4-749326721bf1"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIFERENCA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
