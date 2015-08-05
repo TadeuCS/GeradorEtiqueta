@@ -2,7 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" columnCount="2" pageWidth="282" pageHeight="216" columnWidth="137" leftMargin="7" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="b7b0e7e9-589c-41bc-899d-d78403d33fd4">
 	<property name="ireport.zoom" value="1.6934217901613318"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="26"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<field name="REFERENCIA" class="java.lang.String"/>
 	<field name="PRECO" class="java.lang.Double"/>
 	<field name="PRECO2" class="java.lang.Double"/>
@@ -48,8 +49,8 @@
 				<text><![CDATA[Diferença de a Prazo e a vista]]></text>
 			</staticText>
 			<image>
-				<reportElement x="22" y="24" width="98" height="51" backcolor="#FFFFFF" uuid="f859c530-eac7-42e0-b326-d483a48e89d8"/>
-				<imageExpression><![CDATA["C:\\Reswincs\\logoCasaAraujo.jpg"]]></imageExpression>
+				<reportElement x="26" y="24" width="98" height="51" backcolor="#FFFFFF" uuid="f859c530-eac7-42e0-b326-d483a48e89d8"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="75" y="127" width="56" height="1" backcolor="#FFFFFF" uuid="d991f276-0542-4f0b-bbf5-38b6d403518e"/>

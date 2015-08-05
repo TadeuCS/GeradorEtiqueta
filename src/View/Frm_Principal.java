@@ -6,6 +6,7 @@
 package View;
 
 import Controller.ProdutoDAO;
+import Model.Etiqueta;
 import Model.Produto;
 import Util.GeraRelatorios;
 import Util.ImagemConfig;
@@ -13,7 +14,9 @@ import Util.PropertiesManager;
 import Util.TableConfig;
 import java.io.InputStream;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -30,7 +33,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     public Frm_Principal() {
         initComponents();
         carregaProdutos();
-        props=new PropertiesManager();
+        props = new PropertiesManager();
         carregaLogo(props.ler("logo"));
         carregaQuantidadesByEtiqueta();
     }
@@ -259,7 +262,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         if (tb_produtos.getSelectedRowCount() != 1) {
             JOptionPane.showMessageDialog(null, "Selecione 1 produto para gerar a etiqueta!");
         } else {
-            gerar();
+            gerarEtiqueta(cbx_tamanho.getSelectedIndex());
         }
     }//GEN-LAST:event_btn_gerarActionPerformed
 
@@ -346,19 +349,36 @@ public class Frm_Principal extends javax.swing.JFrame {
         }
     }
 
-    private void gerar() {
+    private void gerarEtiqueta(int tipo) {
         Map parameters = new HashMap();
         GeraRelatorios geraRelatorios = new GeraRelatorios();
         String referencia = tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString();
         try {
-            if (referencia.length() < 12) {
-                referencia = null;
+            if (tipo == 0) {
+                if (referencia.length() < 12) {
+                    referencia = null;
+                }
+                parameters.put("codigo", tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
+                parameters.put("referencia", referencia);
+                InputStream is = null;
+                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
             }
-            parameters.put("codigo", tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
-            parameters.put("referencia", referencia);
-            InputStream is = null;
-            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
-//            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "Etiqueta 10.5x3.0.jasper"); //COMPILADOR
+            if (tipo == 4) {
+                if (lb_logo.getIcon() == null) {
+                    JOptionPane.showMessageDialog(null, "Logo inválida!");
+                } else {
+                    if (txt_qtdeParcelas.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Quantidade de parcelas inválida!");
+                        txt_qtdeParcelas.requestFocus();
+                    } else {
+                        for (int i = 0; i < Integer.parseInt(cbx_qtdeEtiquetas.getSelectedItem().toString()); i++) {
+                        }
+                        props = new PropertiesManager();
+                        parameters.put("logo", props.ler("logo"));
+                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters,null);
+                    }
+                }
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao gerar a etiqueta!\n" + e);
         }
@@ -380,37 +400,52 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void carregaLogo(String caminho) {
         try {
             lb_logo.setText("");
-            imagemConfig=new ImagemConfig();
+            imagemConfig = new ImagemConfig();
             imagemConfig.carregaImagem(lb_logo, caminho, lb_logo.getWidth());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar a Logo!\n"+e);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar a Logo!\n" + e);
         }
     }
 
     private void carregaQuantidadesByEtiqueta() {
         try {
             cbx_qtdeEtiquetas.removeAllItems();
-            if(cbx_tamanho.getSelectedIndex()==0){
+            if (cbx_tamanho.getSelectedIndex() == 0) {
                 cbx_qtdeEtiquetas.addItem("1");
                 txt_qtdeParcelas.setEnabled(false);
-            }else{
+            } else {
                 txt_qtdeParcelas.setEnabled(true);
             }
-            if(cbx_tamanho.getSelectedIndex()==1){
+            if (cbx_tamanho.getSelectedIndex() == 1) {
                 cbx_qtdeEtiquetas.addItem("1");
                 cbx_qtdeEtiquetas.addItem("2");
                 cbx_qtdeEtiquetas.addItem("3");
             }
-            if(cbx_tamanho.getSelectedIndex()==2){
+            if (cbx_tamanho.getSelectedIndex() == 2) {
                 cbx_qtdeEtiquetas.addItem("1");
             }
-            if(cbx_tamanho.getSelectedIndex()==3){
+            if (cbx_tamanho.getSelectedIndex() == 3) {
                 cbx_qtdeEtiquetas.addItem("1");
                 cbx_qtdeEtiquetas.addItem("2");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar as quantidades!"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao carregar as quantidades!" + e.getMessage());
         }
     }
 
+    private Etiqueta getProduto() {
+        try {
+            Etiqueta etiqueta = new Etiqueta();
+            etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
+            etiqueta.setPRECO(Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString()));
+            etiqueta.setPRECO2(Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString()));
+            double percentual = 100 - ((Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString())
+                    * 100) / Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString()));
+            etiqueta.setPERCENT(percentual);
+            return etiqueta;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar os dados do produto selecionado!" + e);
+            return null;
+        }
+    }
 }
