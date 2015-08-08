@@ -1,5 +1,6 @@
 package Util;
 
+import Model.Etiqueta;
 import Model.Produto;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -88,7 +89,7 @@ public class GeraRelatorios {
         }
     }
 
-    public void imprimirByLista(String caminhoDoRelatorio,Map parametros,List<Produto> lista) {
+    public void imprimirByLista(String caminhoDoRelatorio,Map parametros,List<Etiqueta> lista) {
         try {
             //compilação do JRXML
             JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
@@ -97,11 +98,13 @@ public class GeraRelatorios {
             //JRBeanCollectionDataSource 
             JasperPrint print = JasperFillManager.fillReport(report, parametros, new JRBeanCollectionDataSource(lista));
 
+            JasperViewer.viewReport(print, false);
             //exportar pra pdf
-            JasperExportManager.exportReportToPdfFile(print, "Relatorios/RelatorioEmPDF.pdf");
-            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
+//            JasperExportManager.exportReportToPdfFile(print, "src/Relatorios/RelatorioEmPDF.pdf");
+//            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + ex.getMessage());
+            System.out.println(ex);
         }
     }
     

@@ -29,13 +29,13 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     PropertiesManager props;
     ImagemConfig imagemConfig;
+    List<Etiqueta> etiquetas;
 
     public Frm_Principal() {
         initComponents();
         carregaProdutos();
         props = new PropertiesManager();
         carregaLogo(props.ler("logo"));
-        carregaQuantidadesByEtiqueta();
     }
 
     @SuppressWarnings("unchecked")
@@ -55,7 +55,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cbx_tamanho = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        cbx_qtdeEtiquetas = new javax.swing.JComboBox();
+        txt_qtdeEtiquedas = new javax.swing.JTextField();
         btn_gerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -63,7 +63,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tb_produtos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         tb_produtos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -134,23 +133,29 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Quantidade*:");
 
+        txt_qtdeEtiquedas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbx_tamanho, 0, 114, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_qtdeEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -168,7 +173,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cbx_qtdeEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -275,7 +280,6 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lb_logoMousePressed
 
     private void cbx_tamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tamanhoActionPerformed
-        carregaQuantidadesByEtiqueta();
     }//GEN-LAST:event_cbx_tamanhoActionPerformed
 
     /**
@@ -315,7 +319,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_gerar;
-    private javax.swing.JComboBox cbx_qtdeEtiquetas;
     private javax.swing.JComboBox cbx_tamanho;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -328,6 +331,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lb_logo;
     private javax.swing.JTable tb_produtos;
     private javax.swing.JTextField txt_filtro;
+    private javax.swing.JTextField txt_qtdeEtiquedas;
     private javax.swing.JTextField txt_qtdeParcelas;
     // End of variables declaration//GEN-END:variables
 
@@ -363,7 +367,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 InputStream is = null;
                 geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
             }
-            if (tipo == 4) {
+            if (tipo == 3) {
                 if (lb_logo.getIcon() == null) {
                     JOptionPane.showMessageDialog(null, "Logo inválida!");
                 } else {
@@ -371,11 +375,19 @@ public class Frm_Principal extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Quantidade de parcelas inválida!");
                         txt_qtdeParcelas.requestFocus();
                     } else {
-                        for (int i = 0; i < Integer.parseInt(cbx_qtdeEtiquetas.getSelectedItem().toString()); i++) {
+                        if (txt_qtdeEtiquedas.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Quantidade de etiquetas inválida!");
+                            txt_qtdeEtiquedas.requestFocus();
+                        } else {
+                            etiquetas = new ArrayList<>();
+                            for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
+                                etiquetas.add(getProduto());
+                            }
+                            props = new PropertiesManager();
+                            parameters.put("logo", props.ler("logo"));
+                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
+                            System.out.println(etiquetas.get(0).getPRECO2());
                         }
-                        props = new PropertiesManager();
-                        parameters.put("logo", props.ler("logo"));
-                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters,null);
                     }
                 }
             }
@@ -407,45 +419,21 @@ public class Frm_Principal extends javax.swing.JFrame {
         }
     }
 
-    private void carregaQuantidadesByEtiqueta() {
-        try {
-            cbx_qtdeEtiquetas.removeAllItems();
-            if (cbx_tamanho.getSelectedIndex() == 0) {
-                cbx_qtdeEtiquetas.addItem("1");
-                txt_qtdeParcelas.setEnabled(false);
-            } else {
-                txt_qtdeParcelas.setEnabled(true);
-            }
-            if (cbx_tamanho.getSelectedIndex() == 1) {
-                cbx_qtdeEtiquetas.addItem("1");
-                cbx_qtdeEtiquetas.addItem("2");
-                cbx_qtdeEtiquetas.addItem("3");
-            }
-            if (cbx_tamanho.getSelectedIndex() == 2) {
-                cbx_qtdeEtiquetas.addItem("1");
-            }
-            if (cbx_tamanho.getSelectedIndex() == 3) {
-                cbx_qtdeEtiquetas.addItem("1");
-                cbx_qtdeEtiquetas.addItem("2");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar as quantidades!" + e.getMessage());
-        }
-    }
-
     private Etiqueta getProduto() {
-        try {
-            Etiqueta etiqueta = new Etiqueta();
-            etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
-            etiqueta.setPRECO(Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString()));
-            etiqueta.setPRECO2(Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString()));
-            double percentual = 100 - ((Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString())
-                    * 100) / Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString()));
-            etiqueta.setPERCENT(percentual);
-            return etiqueta;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar os dados do produto selecionado!" + e);
-            return null;
-        }
+        Etiqueta etiqueta = new Etiqueta();
+        double preco = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
+        double preco2 = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
+        double percentual = 100 - (preco * 100) / preco2;
+        double diferenca = preco2 - preco;
+        double parcela = preco2/Integer.parseInt(txt_qtdeParcelas.getText());
+        
+        etiqueta.setNumParcelas(Integer.parseInt(txt_qtdeParcelas.getText()));
+        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
+        etiqueta.setPRECO(NumberFormat.getCurrencyInstance().format(preco));
+        etiqueta.setPRECO2(NumberFormat.getCurrencyInstance().format(preco2));
+        etiqueta.setPERCENT(percentual);
+        etiqueta.setDIFERENCA(NumberFormat.getCurrencyInstance().format(diferenca));
+        etiqueta.setPARCELA(NumberFormat.getCurrencyInstance().format(parcela));
+        return etiqueta;
     }
 }

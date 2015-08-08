@@ -3,13 +3,14 @@
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<field name="REFERENCIA" class="java.lang.String"/>
-	<field name="PRECO" class="java.lang.Double"/>
-	<field name="PRECO2" class="java.lang.Double"/>
+	<field name="PRECO" class="java.lang.String"/>
+	<field name="PRECO2" class="java.lang.String"/>
 	<field name="PERCENT" class="java.lang.Double"/>
-	<field name="DIFERENCA" class="java.lang.Double"/>
-	<field name="divisaoResto" class="java.lang.String"/>
+	<field name="DIFERENCA" class="java.lang.String"/>
 	<field name="numParcelas" class="java.lang.Integer"/>
+	<field name="PARCELA" class="java.lang.String"/>
 	<detail>
 		<band height="178" splitType="Stretch">
 			<staticText>
@@ -48,8 +49,8 @@
 				<text><![CDATA[Diferença de a Prazo e a vista]]></text>
 			</staticText>
 			<image>
-				<reportElement x="3" y="6" width="86" height="46" uuid="fa36467d-3600-4244-8384-827c81ce1848"/>
-				<imageExpression><![CDATA["C:\\Reswincs\\logoCasaAraujo.jpg"]]></imageExpression>
+				<reportElement x="3" y="6" width="89" height="46" uuid="fa36467d-3600-4244-8384-827c81ce1848"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="58" y="112" width="37" height="1" uuid="494c9bc0-029e-46b8-a24d-f41de4c4397d"/>
@@ -84,49 +85,42 @@
 				<textFieldExpression><![CDATA[$F{REFERENCIA}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="4" y="55" width="85" height="14" uuid="2ae1bdfc-a1bf-4be9-ad4b-3f63267fdf3b"/>
+				<reportElement x="4" y="55" width="88" height="14" uuid="2ae1bdfc-a1bf-4be9-ad4b-3f63267fdf3b"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="52" y="87" width="38" height="12" uuid="a8a85f32-172a-4397-9015-90fa8bb0a187"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PRECO2}]]></textFieldExpression>
-			</textField>
-			<textField>
+			<textField pattern="###0">
 				<reportElement x="4" y="102" width="37" height="11" uuid="71bc92d8-5791-4754-8ca1-3d47529ef300"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numParcelas}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="56" y="102" width="38" height="11" uuid="9775bd4b-6e8c-417c-839f-403f29da09e9"/>
-				<textElement>
+			<textField>
+				<reportElement x="56" y="102" width="36" height="11" uuid="9775bd4b-6e8c-417c-839f-403f29da09e9"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PRECO2}/$F{numParcelas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PARCELA}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="">
 				<reportElement x="52" y="127" width="43" height="11" uuid="0e41209f-879f-4d42-bc9e-ca00f5d1217d"/>
-				<textElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##%">
 				<reportElement x="53" y="140" width="42" height="11" uuid="7f96704d-230e-45e3-b7f6-9a447b7d67c6"/>
-				<textElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PERCENT}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
+			<textField>
 				<reportElement x="59" y="154" width="36" height="15" uuid="b6e7c738-a022-4009-84e4-749326721bf1"/>
-				<textElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIFERENCA}]]></textFieldExpression>
