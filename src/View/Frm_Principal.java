@@ -12,6 +12,7 @@ import Util.GeraRelatorios;
 import Util.ImagemConfig;
 import Util.PropertiesManager;
 import Util.TableConfig;
+import java.awt.Event;
 import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         carregaProdutos();
         props = new PropertiesManager();
         carregaLogo(props.ler("logo"));
+        validaTamanho(cbx_tamanho.getSelectedIndex());
     }
 
     @SuppressWarnings("unchecked")
@@ -56,8 +58,8 @@ public class Frm_Principal extends javax.swing.JFrame {
         txt_qtdeParcelas = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cbx_tamanho = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
         txt_qtdeEtiquedas = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         btn_gerar = new javax.swing.JButton();
         lb_filial = new javax.swing.JLabel();
 
@@ -83,6 +85,11 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
         tb_produtos.getTableHeader().setReorderingAllowed(false);
+        tb_produtos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tb_produtosKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb_produtos);
         if (tb_produtos.getColumnModel().getColumnCount() > 0) {
             tb_produtos.getColumnModel().getColumn(0).setMinWidth(80);
@@ -124,6 +131,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel3.setText("Parcelas*:");
 
         txt_qtdeParcelas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_qtdeParcelas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_qtdeParcelasKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Tamanho*:");
 
@@ -134,32 +146,33 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Quantidade*:");
-
         txt_qtdeEtiquedas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_qtdeEtiquedas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_qtdeEtiquedasKeyPressed(evt);
+            }
+        });
+
+        jLabel2.setText("Quantidade*:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbx_tamanho, 0, 114, Short.MAX_VALUE)
+                    .addComponent(cbx_tamanho, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -167,16 +180,15 @@ public class Frm_Principal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -209,13 +221,14 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(363, 363, 363)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -289,7 +302,34 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lb_logoMousePressed
 
     private void cbx_tamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tamanhoActionPerformed
+        validaTamanho(cbx_tamanho.getSelectedIndex());
     }//GEN-LAST:event_cbx_tamanhoActionPerformed
+
+    private void tb_produtosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_produtosKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            cbx_tamanho.requestFocus();
+        }
+    }//GEN-LAST:event_tb_produtosKeyPressed
+
+    private void txt_qtdeParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_qtdeParcelasKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            if (txt_qtdeParcelas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Quantidade de Parcelas inválidas!");
+            } else {
+                txt_qtdeEtiquedas.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_qtdeParcelasKeyPressed
+
+    private void txt_qtdeEtiquedasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_qtdeEtiquedasKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            if (txt_qtdeEtiquedas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Quantidade de Etiquetas inválidas!");
+            } else {
+                btn_gerar.doClick();
+            }
+        }
+    }//GEN-LAST:event_txt_qtdeEtiquedasKeyPressed
 
     /**
      * @param args the command line arguments
@@ -376,50 +416,18 @@ public class Frm_Principal extends javax.swing.JFrame {
                 parameters.put("referencia", referencia);
                 InputStream is = null;
                 geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
-            }
-            if (tipo == 1) {
-                if (lb_logo.getIcon() == null) {
-                    JOptionPane.showMessageDialog(null, "Logo inválida!");
-                } else {
-                    if (txt_qtdeParcelas.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Quantidade de parcelas inválida!");
-                        txt_qtdeParcelas.requestFocus();
-                    } else {
-                        if (txt_qtdeEtiquedas.getText().isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Quantidade de etiquetas inválida!");
-                            txt_qtdeEtiquedas.requestFocus();
-                        } else {
-                            etiquetas = new ArrayList<>();
-                            for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
-                                etiquetas.add(getProduto());
-                            }
-                            props = new PropertiesManager();
-                            parameters.put("logo", props.ler("logo"));
-                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
-                        }
-                    }
+            } else {
+                etiquetas = new ArrayList<>();
+                for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
+                    etiquetas.add(getProduto());
                 }
-            }
-            if (tipo == 2) {
-                if (lb_logo.getIcon() == null) {
-                    JOptionPane.showMessageDialog(null, "Logo inválida!");
+                props = new PropertiesManager();
+                parameters.put("logo", props.ler("logo"));
+                if (tipo == 1) {
+                    geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
                 } else {
-                    if (txt_qtdeParcelas.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Quantidade de parcelas inválida!");
-                        txt_qtdeParcelas.requestFocus();
-                    } else {
-                        if (txt_qtdeEtiquedas.getText().isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Quantidade de etiquetas inválida!");
-                            txt_qtdeEtiquedas.requestFocus();
-                        } else {
-                            etiquetas = new ArrayList<>();
-                            for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
-                                etiquetas.add(getProduto());
-                            }
-                            props = new PropertiesManager();
-                            parameters.put("logo", props.ler("logo"));
-                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
-                        }
+                    if (tipo == 2) {
+                        geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
                     }
                 }
             }
@@ -457,8 +465,8 @@ public class Frm_Principal extends javax.swing.JFrame {
         double preco2 = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
         double percentual = 100 - (preco * 100) / preco2;
         double diferenca = preco2 - preco;
-        double parcela = preco2/Integer.parseInt(txt_qtdeParcelas.getText());
-        
+        double parcela = preco2 / Integer.parseInt(txt_qtdeParcelas.getText());
+
         etiqueta.setNumParcelas(Integer.parseInt(txt_qtdeParcelas.getText()));
         etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
         etiqueta.setPRECO(NumberFormat.getCurrencyInstance().format(preco));
@@ -467,5 +475,20 @@ public class Frm_Principal extends javax.swing.JFrame {
         etiqueta.setDIFERENCA(NumberFormat.getCurrencyInstance().format(diferenca));
         etiqueta.setPARCELA(NumberFormat.getCurrencyInstance().format(parcela));
         return etiqueta;
+    }
+
+    private void validaTamanho(int item) {
+        if (item == 0) {
+            txt_qtdeEtiquedas.setText(null);
+            txt_qtdeEtiquedas.setEnabled(false);
+            txt_qtdeParcelas.setText(null);
+            txt_qtdeParcelas.setEnabled(false);
+        } else {
+            txt_qtdeEtiquedas.setText(null);
+            txt_qtdeEtiquedas.setEnabled(true);
+            txt_qtdeParcelas.setText(null);
+            txt_qtdeParcelas.setEnabled(true);
+            txt_qtdeParcelas.requestFocus();
+        }
     }
 }
