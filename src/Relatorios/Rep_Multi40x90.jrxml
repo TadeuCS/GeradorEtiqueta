@@ -82,7 +82,7 @@
 				<textFieldExpression><![CDATA[$F{REFERENCIA}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="11" y="70" width="114" height="17" backcolor="#FFFFFF" uuid="2958f62c-c89d-4390-8d4e-970f334677a2"/>
+				<reportElement x="10" y="70" width="114" height="17" backcolor="#FFFFFF" uuid="2958f62c-c89d-4390-8d4e-970f334677a2"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
 					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
 				</jr:barbecue>

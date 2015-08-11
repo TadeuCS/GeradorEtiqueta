@@ -183,12 +183,13 @@ public class Frm_Principal extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_qtdeEtiquedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_qtdeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -345,16 +346,21 @@ public class Frm_Principal extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -415,19 +421,32 @@ public class Frm_Principal extends javax.swing.JFrame {
                 parameters.put("codigo", tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
                 parameters.put("referencia", referencia);
                 InputStream is = null;
-                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
+//                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
+                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "Etiqueta 10.5x3.0.jasper"); 
             } else {
-                etiquetas = new ArrayList<>();
-                for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
-                    etiquetas.add(getProduto());
-                }
-                props = new PropertiesManager();
-                parameters.put("logo", props.ler("logo"));
-                if (tipo == 1) {
-                    geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
+                if (txt_qtdeParcelas.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Quantidade de Parcelas inválidas!");
+                    txt_qtdeParcelas.requestFocus();
                 } else {
-                    if (tipo == 2) {
-                        geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
+                    if (txt_qtdeEtiquedas.getText().trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Quantidade de Etiquetas inválidas!");
+                        txt_qtdeEtiquedas.requestFocus();
+                    } else {
+                        etiquetas = new ArrayList<>();
+                        for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
+                            etiquetas.add(getProduto());
+                        }
+                        props = new PropertiesManager();
+                        parameters.put("logo", props.ler("logo"));
+                        if (tipo == 1) {
+//                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
+                            geraRelatorios.imprimirByLista("Rep_Multi33x70.jasper", parameters, etiquetas);
+                        } else {
+                            if (tipo == 2) {
+//                                geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
+                                geraRelatorios.imprimirByLista("Rep_Multi40x90.jasper", parameters, etiquetas);
+                            }
+                        }
                     }
                 }
             }

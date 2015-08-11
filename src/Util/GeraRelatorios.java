@@ -92,11 +92,11 @@ public class GeraRelatorios {
     public void imprimirByLista(String caminhoDoRelatorio,Map parametros,List<Etiqueta> lista) {
         try {
             //compilação do JRXML
-            JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
+//            JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
 
             //preenchimento do relatório
             //JRBeanCollectionDataSource 
-            JasperPrint print = JasperFillManager.fillReport(report, parametros, new JRBeanCollectionDataSource(lista));
+            JasperPrint print = JasperFillManager.fillReport(caminhoDoRelatorio, parametros, new JRBeanCollectionDataSource(lista));
 
             JasperViewer.viewReport(print, false);
             //exportar pra pdf
