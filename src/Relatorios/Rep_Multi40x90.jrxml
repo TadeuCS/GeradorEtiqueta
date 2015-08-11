@@ -14,35 +14,35 @@
 	<detail>
 		<band height="212" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="11" y="91" width="30" height="15" backcolor="#CCCCCC" uuid="580d5375-0b9a-49d3-b228-c5fd7a2106a7"/>
+				<reportElement mode="Opaque" x="11" y="91" width="30" height="15" uuid="580d5375-0b9a-49d3-b228-c5fd7a2106a7"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial Black" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Ref:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="11" y="108" width="56" height="15" backcolor="#CCCCCC" uuid="ee011de9-5cd1-4dc8-8749-538451d9e3b5"/>
+				<reportElement mode="Opaque" x="11" y="108" width="56" height="15" uuid="ee011de9-5cd1-4dc8-8749-538451d9e3b5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial Black" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[A Prazo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="11" y="145" width="64" height="15" backcolor="#CCCCCC" uuid="c32c8faa-b273-46f6-b8cd-d80dcadee526"/>
+				<reportElement mode="Opaque" x="11" y="145" width="64" height="15" uuid="c32c8faa-b273-46f6-b8cd-d80dcadee526"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial Black" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[A Vista:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="11" y="161" width="63" height="15" backcolor="#CCCCCC" uuid="51da9eb3-5310-4cd4-9bb2-b2498097441b"/>
+				<reportElement mode="Opaque" x="11" y="161" width="63" height="15" uuid="51da9eb3-5310-4cd4-9bb2-b2498097441b"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial Black" size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Desc. Vista:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="11" y="177" width="63" height="28" backcolor="#CCCCCC" uuid="08070446-7d56-4970-9c84-a32f39362f8d"/>
+				<reportElement mode="Opaque" x="11" y="177" width="63" height="28" uuid="08070446-7d56-4970-9c84-a32f39362f8d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial Black" size="7" isBold="false"/>
 				</textElement>
