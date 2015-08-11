@@ -367,7 +367,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 InputStream is = null;
                 geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
             }
-            if (tipo == 3) {
+            if (tipo == 1) {
                 if (lb_logo.getIcon() == null) {
                     JOptionPane.showMessageDialog(null, "Logo inválida!");
                 } else {
@@ -386,7 +386,29 @@ public class Frm_Principal extends javax.swing.JFrame {
                             props = new PropertiesManager();
                             parameters.put("logo", props.ler("logo"));
                             geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
-                            System.out.println(etiquetas.get(0).getPRECO2());
+                        }
+                    }
+                }
+            }
+            if (tipo == 3) {
+                if (lb_logo.getIcon() == null) {
+                    JOptionPane.showMessageDialog(null, "Logo inválida!");
+                } else {
+                    if (txt_qtdeParcelas.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Quantidade de parcelas inválida!");
+                        txt_qtdeParcelas.requestFocus();
+                    } else {
+                        if (txt_qtdeEtiquedas.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Quantidade de etiquetas inválida!");
+                            txt_qtdeEtiquedas.requestFocus();
+                        } else {
+                            etiquetas = new ArrayList<>();
+                            for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
+                                etiquetas.add(getProduto());
+                            }
+                            props = new PropertiesManager();
+                            parameters.put("logo", props.ler("logo"));
+                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
                         }
                     }
                 }
