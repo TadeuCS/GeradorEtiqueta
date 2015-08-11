@@ -3,6 +3,7 @@
   <persistence-unit name="EtiquetaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Model.Produto</class>
+    <class>Model.Filiais</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:firebirdsql://localhost:3050/C:/ResWinCS/Banco/Resulth.FB"/>
       <property name="javax.persistence.jdbc.user" value="SYSDBA"/>

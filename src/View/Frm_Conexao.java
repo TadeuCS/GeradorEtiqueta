@@ -103,6 +103,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 .addGap(11, 11, 11))
         );
 
+        btn_testar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/executar.png"))); // NOI18N
         btn_testar.setText("Testar");
         btn_testar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,6 +111,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
             }
         });
 
+        btn_gravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salvar.png"))); // NOI18N
         btn_gravar.setText("Gravar");
         btn_gravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,7 +143,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_fundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btn_testar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -237,12 +239,13 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 if (txt_cnpj.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "CNPJ inválido!");
                     txt_cnpj.requestFocus();
-                }
-                if (testaConexao(txt_ip.getText(), txt_banco.getText(), "SYSDBA", "masterkey") != null) {
-                    status.setText("Conexão bem Sucedida!");
                 } else {
-                    status.setText("Sem Conexão!");
-                    JOptionPane.showMessageDialog(null, "Erro ao conectar no banco de dados!");
+                    if (testaConexao(txt_ip.getText(), txt_banco.getText(), "SYSDBA", "masterkey") != null) {
+                        status.setText("Conexão bem Sucedida!");
+                    } else {
+                        status.setText("Sem Conexão!");
+                        JOptionPane.showMessageDialog(null, "Erro ao conectar no banco de dados!");
+                    }
                 }
             }
         }
@@ -270,10 +273,10 @@ public class Frm_Conexao extends javax.swing.JFrame {
 
     private Statement testaConexao(String ip, String banco, String usuario, String senha) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.firebirdsql.jdbc.FBDriver");
             con = DriverManager.getConnection(
-                    "jdbc:mysql://"
-                    + ip + ":3306/" + banco + "?zeroDateTimeBehavior=convertToNull",
+                    "jdbc:firebirdsql://"
+                    + ip + ":3050/" + banco,
                     usuario,
                     senha);
             st = con.createStatement();

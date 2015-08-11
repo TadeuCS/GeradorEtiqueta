@@ -46,7 +46,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnl_fundo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btn_testar" alignment="0" max="32767" attributes="0"/>
@@ -149,6 +149,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="btn_testar">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/img/executar.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Testar"/>
       </Properties>
       <Events>
@@ -157,6 +160,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_gravar">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/img/salvar.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Gravar"/>
       </Properties>
       <Events>
