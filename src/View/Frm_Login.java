@@ -40,35 +40,28 @@ public class Frm_Login extends javax.swing.JFrame {
     }
 
     public void logar(String nome, String senha) {
-        try {
-            if ((nome.toUpperCase().equals("ADMIN") == true)
-                    && (senha.equals("80177534a0c99a7e3645b52f2027a48b") == true)) {
-                conexao = new Conexao();
-                prop = new PropertiesManager();
-                FiliaisDAO filiaisDAO = new FiliaisDAO();
-                if (conexao.getConexao(prop.ler("ip"), prop.ler("diretorio")) == null) {
-                    JOptionPane.showMessageDialog(null, "Erro de conexão com banco de dados!");
-                } else {
-                    try {
-                        Frm_Principal f=new Frm_Principal(filiaisDAO.buscar(prop.ler("cnpj").replace(".", "").replace("/", "").replace("-", "").trim()).getNomeempresa());
-                        dispose();
-                    } catch (NoResultException e) {
-                        JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
-                    }catch(Exception e){
-                        JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
-                    }
+        if (((nome.toUpperCase().equals("ADMIN") == true) && (senha.equals("80177534a0c99a7e3645b52f2027a48b") == true))
+         || ((nome.toUpperCase().equals("MESTRE") == true) && (senha.equals("989b731fca676f41b6a48c6ccb0d4801") == true))) {
+            conexao = new Conexao();
+            prop = new PropertiesManager();
+            FiliaisDAO filiaisDAO = new FiliaisDAO();
+            if (conexao.getConexao(prop.ler("ip"), prop.ler("diretorio")) == null) {
+                JOptionPane.showMessageDialog(null, "Erro de conexão com banco de dados!");
+            } else {
+                try {
+                    Frm_Principal f = new Frm_Principal(filiaisDAO.buscar(prop.ler("cnpj").replace(".", "").replace("/", "").replace("-", "").trim()).getNomeempresa());
+                    dispose();
+                } catch (NoResultException e) {
+                    JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
                 }
-            }else{
-                System.out.println(nome+"\n"+senha);
             }
-        } catch (NoResultException e) {
-            JOptionPane.showMessageDialog(null, "Usuário ou Senha inválidos!", "Aviso", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro de conexão com o banco de dados!\n" + e.getMessage());
-        } finally {
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
             limpaCampos();
+            txt_usuario.requestFocus();
         }
-
     }
 
     @SuppressWarnings("unchecked")

@@ -127,7 +127,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Tamanho*:");
 
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "10.6 cm X 9.4 cm", "  9.6 cm X 8.2 cm" }));
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm" }));
         cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tamanhoActionPerformed(evt);
@@ -400,7 +400,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                     }
                 }
             }
-            if (tipo == 3) {
+            if (tipo == 2) {
                 if (lb_logo.getIcon() == null) {
                     JOptionPane.showMessageDialog(null, "Logo inválida!");
                 } else {
