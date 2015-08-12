@@ -222,13 +222,12 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(363, 363, 363)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -392,21 +391,21 @@ public class Frm_Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void carregaProdutos() {
-        try {
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            for (Produto produto : produtoDAO.listar()) {
-                String[] linha = new String[]{
-                    produto.getCodprod(),
-                    produto.getReferencia(),
-                    produto.getDescricao(),
-                    NumberFormat.getCurrencyInstance().format(produto.getPreco()),
-                    NumberFormat.getCurrencyInstance().format(produto.getPreco2())
-                };
-                TableConfig.getModel(tb_produtos).addRow(linha);
+            try {
+                ProdutoDAO produtoDAO = new ProdutoDAO();
+                for (Produto produto : produtoDAO.listar()) {
+                    String[] linha = new String[]{
+                        produto.getCodprod(),
+                        produto.getReferencia(),
+                        produto.getDescricao(),
+                        NumberFormat.getCurrencyInstance().format(produto.getPreco()),
+                        NumberFormat.getCurrencyInstance().format(produto.getPreco2())
+                    };
+                    TableConfig.getModel(tb_produtos).addRow(linha);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
     }
 
     private void gerarEtiqueta(int tipo) {
@@ -421,8 +420,8 @@ public class Frm_Principal extends javax.swing.JFrame {
                 parameters.put("codigo", tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
                 parameters.put("referencia", referencia);
                 InputStream is = null;
-//                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
-                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "Etiqueta 10.5x3.0.jasper"); 
+                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
+//                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "Etiqueta 10.5x3.0.jasper"); 
             } else {
                 if (txt_qtdeParcelas.getText().trim().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Quantidade de Parcelas inválidas!");
@@ -439,12 +438,12 @@ public class Frm_Principal extends javax.swing.JFrame {
                         props = new PropertiesManager();
                         parameters.put("logo", props.ler("logo"));
                         if (tipo == 1) {
-//                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
-                            geraRelatorios.imprimirByLista("Rep_Multi33x70.jasper", parameters, etiquetas);
+                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
+//                            geraRelatorios.imprimirByLista("Rep_Multi33x70.jasper", parameters, etiquetas);
                         } else {
                             if (tipo == 2) {
-//                                geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
-                                geraRelatorios.imprimirByLista("Rep_Multi40x90.jasper", parameters, etiquetas);
+                                geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
+//                                geraRelatorios.imprimirByLista("Rep_Multi40x90.jasper", parameters, etiquetas);
                             }
                         }
                     }
@@ -487,7 +486,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         double parcela = preco2 / Integer.parseInt(txt_qtdeParcelas.getText());
 
         etiqueta.setNumParcelas(Integer.parseInt(txt_qtdeParcelas.getText()));
-        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
+        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
         etiqueta.setPRECO(NumberFormat.getCurrencyInstance().format(preco));
         etiqueta.setPRECO2(NumberFormat.getCurrencyInstance().format(preco2));
         etiqueta.setPERCENT(percentual);

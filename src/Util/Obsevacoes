@@ -14,3 +14,8 @@ columns=3
 --------------
 width=10,5
 height=3
+--------------
+width= 8,5
+height= 7,5
+top height=5,5
+bot height=2,0
