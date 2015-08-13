@@ -41,15 +41,14 @@ public class Frm_Login extends javax.swing.JFrame {
 
     public void logar(String nome, String senha) {
         if (((nome.toUpperCase().equals("ADMIN") == true) && (senha.equals("80177534a0c99a7e3645b52f2027a48b") == true))
-         || ((nome.toUpperCase().equals("MESTRE") == true) && (senha.equals("989b731fca676f41b6a48c6ccb0d4801") == true))) {
+                || ((nome.toUpperCase().equals("MESTRE") == true) && (senha.equals("989b731fca676f41b6a48c6ccb0d4801") == true))) {
             conexao = new Conexao();
             prop = new PropertiesManager();
-            FiliaisDAO filiaisDAO = new FiliaisDAO();
-            if (conexao.getConexao(prop.ler("ip"), prop.ler("diretorio")) == null) {
-                JOptionPane.showMessageDialog(null, "Erro de conexão com banco de dados!");
-            } else {
+            if (conexao.getConexao(prop.ler("ip"), prop.ler("diretorio")) != null) {
                 try {
-                    Frm_Principal f = new Frm_Principal(filiaisDAO.buscar(prop.ler("cnpj").replace(".", "").replace("/", "").replace("-", "").trim()).getNomeempresa());
+                    FiliaisDAO filiaisDAO = new FiliaisDAO();
+                    Frm_Principal f = new Frm_Principal(filiaisDAO.buscar(prop.ler("cnpj").replace(".", "").replace("/", "").replace("-", "").trim()).getNomeempresa(),
+                            txt_usuario.getText().toUpperCase());
                     dispose();
                 } catch (NoResultException e) {
                     JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
@@ -127,6 +126,9 @@ public class Frm_Login extends javax.swing.JFrame {
         btn_conexao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_conexaoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_conexaoMouseReleased(evt);
             }
         });
 
@@ -245,6 +247,10 @@ public class Frm_Login extends javax.swing.JFrame {
         valida();
     }//GEN-LAST:event_btn_conexaoMousePressed
 
+    private void btn_conexaoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_conexaoMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_conexaoMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -311,7 +317,8 @@ public class Frm_Login extends javax.swing.JFrame {
     }
 
     private void valida() {
-        if (!txt_usuario.getText().trim().isEmpty() && txt_usuario.getText().toUpperCase().equals("ADMIN") == true) {
+        if ((!txt_usuario.getText().trim().isEmpty() && txt_usuario.getText().toUpperCase().equals("ADMIN") == true)
+                && (!txt_senha.getText().isEmpty() && Criptografia.criptografar(txt_senha.getText()).equals("80177534a0c99a7e3645b52f2027a48b") == true)) {
             Frm_Conexao f = new Frm_Conexao();
         } else {
             JOptionPane.showMessageDialog(null, "Você não tem permissão de alterar as configurações de conexão!");

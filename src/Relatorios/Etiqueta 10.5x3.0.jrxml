@@ -3,42 +3,24 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="codigo" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="referencia" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select p.descricao,p.referencia,p.preco from produto p
-where p.codprod = $P{codigo}]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="DESCRICAO" class="java.lang.String">
-		<fieldDescription><![CDATA[Descrição]]></fieldDescription>
-	</field>
-	<field name="REFERENCIA" class="java.lang.String">
-		<fieldDescription><![CDATA[Referência]]></fieldDescription>
-	</field>
-	<field name="PRECO" class="java.lang.Double">
-		<fieldDescription><![CDATA[Preço 1]]></fieldDescription>
-	</field>
+	<field name="PRECO" class="java.lang.String"/>
+	<field name="DESCRICAO" class="java.lang.String"/>
 	<detail>
 		<band height="67" splitType="Immediate">
-			<componentElement>
-				<reportElement x="3" y="34" width="117" height="31" uuid="8f02b475-3ecb-4a07-b477-841507f0328f"/>
-				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
-					<jr:codeExpression><![CDATA[$P{referencia}]]></jr:codeExpression>
-				</jr:EAN13>
-			</componentElement>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="141" y="35" width="124" height="28" uuid="855ee288-4a0c-4f9c-90c0-ea1854925f0a"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+			<textField>
+				<reportElement x="0" y="38" width="280" height="29" uuid="f1f13f35-8118-4a0f-b23f-90482e02e790"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="22" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="1" width="279" height="33" uuid="9c60e3c4-8885-4897-aaa3-c0ccc0776dba"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Britannic Bold" size="14" isBold="false" isItalic="false"/>
+			<textField>
+				<reportElement x="0" y="0" width="280" height="38" uuid="67acbe55-10eb-4312-89ab-001d6504d6d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
 			</textField>

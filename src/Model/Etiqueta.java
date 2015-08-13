@@ -17,6 +17,15 @@ public class Etiqueta {
     private String DIFERENCA;
     private int numParcelas;
     private String PARCELA;
+    private String DESCRICAO;
+
+    public String getDESCRICAO() {
+        return DESCRICAO;
+    }
+
+    public void setDESCRICAO(String DESCRICAO) {
+        this.DESCRICAO = DESCRICAO;
+    }
 
     public String getPARCELA() {
         return PARCELA;

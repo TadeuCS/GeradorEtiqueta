@@ -20,4 +20,10 @@ public class FiliaisDAO extends Conexao {
         em.getTransaction().commit();
         return (Filiais) query.getSingleResult();
     }
+    public Filiais getFirst() {
+        em.getTransaction().begin();
+        query = em.createQuery("SELECT f FROM Filiais f WHERE f.codempresa='00'");
+        em.getTransaction().commit();
+        return (Filiais) query.getSingleResult();
+    }
 }

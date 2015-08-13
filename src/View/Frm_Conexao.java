@@ -4,12 +4,18 @@
  */
 package View;
 
+import Controller.FiliaisDAO;
+import Model.Filiais;
 import Util.Conexao;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Statement;
 import Util.PropertiesManager;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.DriverManager;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +30,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
     PrintWriter pw;
     PropertiesManager props;
     Conexao conexao;
+    String diretorio;
 
     public Frm_Conexao() {
         initComponents();
@@ -42,9 +49,13 @@ public class Frm_Conexao extends javax.swing.JFrame {
         txt_banco = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_cnpj = new javax.swing.JFormattedTextField();
+        btn_buscar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cbx_tamanho = new javax.swing.JComboBox();
         btn_testar = new javax.swing.JButton();
         btn_gravar = new javax.swing.JButton();
         status = new javax.swing.JLabel();
+        btn_testar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuração de Conexão");
@@ -67,6 +78,22 @@ public class Frm_Conexao extends javax.swing.JFrame {
         }
         txt_cnpj.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        btn_buscar.setText("...");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Etiqueta:");
+
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm" }));
+        cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_tamanhoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
         pnl_fundo.setLayout(pnl_fundoLayout);
         pnl_fundoLayout.setHorizontalGroup(
@@ -80,11 +107,18 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_banco))
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addComponent(txt_banco)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnl_fundoLayout.setVerticalGroup(
@@ -95,11 +129,15 @@ public class Frm_Conexao extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txt_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(11, 11, 11))
         );
 
@@ -122,6 +160,14 @@ public class Frm_Conexao extends javax.swing.JFrame {
         status.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         status.setForeground(new java.awt.Color(0, 51, 153));
 
+        btn_testar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carregar.png"))); // NOI18N
+        btn_testar1.setText("Carregar");
+        btn_testar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_testar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,9 +176,11 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(28, 28, 28)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_testar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_testar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_gravar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -143,13 +191,15 @@ public class Frm_Conexao extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_fundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btn_testar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_gravar))
-                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_testar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_gravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_testar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -163,6 +213,17 @@ public class Frm_Conexao extends javax.swing.JFrame {
     private void btn_gravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gravarActionPerformed
         gravaDadosConexao();
     }//GEN-LAST:event_btn_gravarActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        buscaImagem();
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_testar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_testar1ActionPerformed
+        carregarCNPJ();
+    }//GEN-LAST:event_btn_testar1ActionPerformed
+
+    private void cbx_tamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tamanhoActionPerformed
+    }//GEN-LAST:event_cbx_tamanhoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,8 +268,12 @@ public class Frm_Conexao extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_gravar;
     private javax.swing.JButton btn_testar;
+    private javax.swing.JButton btn_testar1;
+    private javax.swing.JComboBox cbx_tamanho;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
@@ -224,6 +289,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
         txt_banco.setText(props.ler("diretorio"));
         txt_ip.setText(props.ler("ip"));
         txt_cnpj.setText(props.ler("cnpj"));
+        cbx_tamanho.setSelectedIndex(Integer.parseInt(props.ler("etiqueta")));
     }
 
     private void validaCampos() {
@@ -257,6 +323,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 props = new PropertiesManager();
                 props.altera("ip", txt_ip.getText());
                 props.altera("diretorio", txt_banco.getText());
+                props.altera("etiqueta", cbx_tamanho.getSelectedIndex()+"");
                 if (!txt_cnpj.getText().replace(".", "").replace("/", "").replace("-", "").trim().isEmpty()) {
                     props.altera("cnpj", txt_cnpj.getText());
                 }
@@ -283,6 +350,27 @@ public class Frm_Conexao extends javax.swing.JFrame {
             return st;
         } catch (Exception e) {
             return null;
+        }
+    }
+    private void buscaImagem() {
+        JFileChooser c = new JFileChooser();
+        c.showOpenDialog(this);//abre o arquivo  
+        File file = c.getSelectedFile();//abre o arquivo selecionado  
+        Path path = Paths.get(file.getAbsolutePath());
+        diretorio = path.toString();
+        if (diretorio.endsWith(".FB")) {
+            txt_banco.setText(diretorio.replace("\\", "/"));
+        } else {
+            JOptionPane.showMessageDialog(this, "Extenção do arquivo selecionado inválido!\n ");
+        }
+    }
+
+    private void carregarCNPJ() {
+        try {
+            FiliaisDAO filiaisDAO=new FiliaisDAO();
+            txt_cnpj.setText(filiaisDAO.getFirst().getCgc());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar o CNPJ!");
         }
     }
 }

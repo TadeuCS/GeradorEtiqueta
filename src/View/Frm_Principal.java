@@ -13,7 +13,6 @@ import Util.ImagemConfig;
 import Util.PropertiesManager;
 import Util.TableConfig;
 import java.awt.Event;
-import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,14 +31,14 @@ public class Frm_Principal extends javax.swing.JFrame {
     ImagemConfig imagemConfig;
     List<Etiqueta> etiquetas;
 
-    public Frm_Principal(String filial) {
+    public Frm_Principal(String filial,String Usuario) {
         initComponents();
         setVisible(true);
+        props = new PropertiesManager();
+        validaUsuarioLogado(Usuario);
         lb_filial.setText(filial);
         carregaProdutos();
-        props = new PropertiesManager();
         carregaLogo(props.ler("logo"));
-        validaTamanho(cbx_tamanho.getSelectedIndex());
     }
 
     @SuppressWarnings("unchecked")
@@ -139,7 +138,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Tamanho*:");
 
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm" }));
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm" }));
         cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tamanhoActionPerformed(evt);
@@ -391,59 +390,57 @@ public class Frm_Principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void carregaProdutos() {
-            try {
-                ProdutoDAO produtoDAO = new ProdutoDAO();
-                for (Produto produto : produtoDAO.listar()) {
-                    String[] linha = new String[]{
-                        produto.getCodprod(),
-                        produto.getReferencia(),
-                        produto.getDescricao(),
-                        NumberFormat.getCurrencyInstance().format(produto.getPreco()),
-                        NumberFormat.getCurrencyInstance().format(produto.getPreco2())
-                    };
-                    TableConfig.getModel(tb_produtos).addRow(linha);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+        try {
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            for (Produto produto : produtoDAO.listar()) {
+                String[] linha = new String[]{
+                    produto.getCodprod(),
+                    produto.getReferencia(),
+                    produto.getDescricao(),
+                    NumberFormat.getCurrencyInstance().format(produto.getPreco()),
+                    NumberFormat.getCurrencyInstance().format(produto.getPreco2())
+                };
+                TableConfig.getModel(tb_produtos).addRow(linha);
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     private void gerarEtiqueta(int tipo) {
         Map parameters = new HashMap();
         GeraRelatorios geraRelatorios = new GeraRelatorios();
-        String referencia = tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString();
         try {
-            if (tipo == 0) {
-                if (referencia.length() < 12) {
-                    referencia = null;
-                }
-                parameters.put("codigo", tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
-                parameters.put("referencia", referencia);
-                InputStream is = null;
-                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Etiqueta 10.5x3.0.jasper"); //IDE
-//                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "Etiqueta 10.5x3.0.jasper"); 
+            if (txt_qtdeParcelas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Quantidade de Parcelas inválidas!");
+                txt_qtdeParcelas.requestFocus();
             } else {
-                if (txt_qtdeParcelas.getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Quantidade de Parcelas inválidas!");
-                    txt_qtdeParcelas.requestFocus();
+                if (txt_qtdeEtiquedas.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Quantidade de Etiquetas inválidas!");
+                    txt_qtdeEtiquedas.requestFocus();
                 } else {
-                    if (txt_qtdeEtiquedas.getText().trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Quantidade de Etiquetas inválidas!");
-                        txt_qtdeEtiquedas.requestFocus();
+                    etiquetas = new ArrayList<>();
+                    for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
+                        etiquetas.add(getProduto());
+                    }
+                    props = new PropertiesManager();
+                    if (tipo == 0) {
+                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
+//                        geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
                     } else {
-                        etiquetas = new ArrayList<>();
-                        for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
-                            etiquetas.add(getProduto());
-                        }
-                        props = new PropertiesManager();
                         parameters.put("logo", props.ler("logo"));
                         if (tipo == 1) {
-                            geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi33x70.jrxml", parameters, etiquetas);
-//                            geraRelatorios.imprimirByLista("Rep_Multi33x70.jasper", parameters, etiquetas);
+                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
+//                            geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
                         } else {
                             if (tipo == 2) {
-                                geraRelatorios.imprimirByLista("src/Relatorios/Rep_Multi40x90.jrxml", parameters, etiquetas);
-//                                geraRelatorios.imprimirByLista("Rep_Multi40x90.jasper", parameters, etiquetas);
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
+//                                geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
+                            } else {
+                                if (tipo == 3) {
+                                    geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
+//                                geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
+                                }
                             }
                         }
                     }
@@ -485,6 +482,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         double diferenca = preco2 - preco;
         double parcela = preco2 / Integer.parseInt(txt_qtdeParcelas.getText());
 
+        etiqueta.setDESCRICAO(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString());
         etiqueta.setNumParcelas(Integer.parseInt(txt_qtdeParcelas.getText()));
         etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
         etiqueta.setPRECO(NumberFormat.getCurrencyInstance().format(preco));
@@ -497,9 +495,9 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void validaTamanho(int item) {
         if (item == 0) {
-            txt_qtdeEtiquedas.setText(null);
+            txt_qtdeEtiquedas.setText("1");
             txt_qtdeEtiquedas.setEnabled(false);
-            txt_qtdeParcelas.setText(null);
+            txt_qtdeParcelas.setText("0");
             txt_qtdeParcelas.setEnabled(false);
         } else {
             txt_qtdeEtiquedas.setText(null);
@@ -508,5 +506,15 @@ public class Frm_Principal extends javax.swing.JFrame {
             txt_qtdeParcelas.setEnabled(true);
             txt_qtdeParcelas.requestFocus();
         }
+    }
+
+    private void validaUsuarioLogado(String Usuario) {
+        if(Usuario.equals("MESTRE")==true){
+            cbx_tamanho.setSelectedIndex(Integer.parseInt(props.ler("etiqueta")));
+            cbx_tamanho.setEnabled(false);
+        }else{
+            cbx_tamanho.setEnabled(true);
+        }
+        validaTamanho(cbx_tamanho.getSelectedIndex());
     }
 }

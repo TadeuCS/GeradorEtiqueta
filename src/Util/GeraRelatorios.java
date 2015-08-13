@@ -1,7 +1,6 @@
 package Util;
 
 import Model.Etiqueta;
-import Model.Produto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,7 +14,6 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -92,11 +90,11 @@ public class GeraRelatorios {
     public void imprimirByLista(String caminhoDoRelatorio,Map parametros,List<Etiqueta> lista) {
         try {
             //compilação do JRXML
-            JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
+//            JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
 
             //preenchimento do relatório
             //JRBeanCollectionDataSource 
-            JasperPrint print = JasperFillManager.fillReport(report, parametros, new JRBeanCollectionDataSource(lista));
+            JasperPrint print = JasperFillManager.fillReport(caminhoDoRelatorio, parametros, new JRBeanCollectionDataSource(lista));
 
             JasperViewer.viewReport(print, false);
             //exportar pra pdf
