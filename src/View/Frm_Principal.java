@@ -13,6 +13,7 @@ import Util.ImagemConfig;
 import Util.PropertiesManager;
 import Util.TableConfig;
 import java.awt.Event;
+import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     ImagemConfig imagemConfig;
     List<Etiqueta> etiquetas;
 
-    public Frm_Principal(String filial,String Usuario) {
+    public Frm_Principal(String filial, String Usuario) {
         initComponents();
         setVisible(true);
         props = new PropertiesManager();
@@ -425,21 +426,26 @@ public class Frm_Principal extends javax.swing.JFrame {
                     }
                     props = new PropertiesManager();
                     if (tipo == 0) {
-                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
-//                        geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
+//                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
+                        if (geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == false) {
+                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
+                        }
                     } else {
                         parameters.put("logo", props.ler("logo"));
                         if (tipo == 1) {
-                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
-//                            geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
+                            if (geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == false) {
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
+                            }
                         } else {
                             if (tipo == 2) {
-                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
-//                                geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
+                                if (geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas) == false) {
+                                    geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
+                                }
                             } else {
                                 if (tipo == 3) {
-                                    geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
-//                                geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
+                                    if (geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas) == false) {
+                                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
+                                    }
                                 }
                             }
                         }
@@ -509,10 +515,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     }
 
     private void validaUsuarioLogado(String Usuario) {
-        if(Usuario.equals("MESTRE")==true){
+        if (Usuario.equals("MESTRE") == true) {
             cbx_tamanho.setSelectedIndex(Integer.parseInt(props.ler("etiqueta")));
             cbx_tamanho.setEnabled(false);
-        }else{
+        } else {
             cbx_tamanho.setEnabled(true);
         }
         validaTamanho(cbx_tamanho.getSelectedIndex());

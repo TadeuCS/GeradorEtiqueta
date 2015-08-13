@@ -1,6 +1,7 @@
 package Util;
 
 import Model.Etiqueta;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,7 +14,6 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -87,7 +87,7 @@ public class GeraRelatorios {
         }
     }
 
-    public void imprimirByLista(String caminhoDoRelatorio,Map parametros,List<Etiqueta> lista) {
+    public boolean imprimirByLista(String caminhoDoRelatorio, Map parametros, List<Etiqueta> lista) {
         try {
             //compilação do JRXML
 //            JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
@@ -97,13 +97,13 @@ public class GeraRelatorios {
             JasperPrint print = JasperFillManager.fillReport(caminhoDoRelatorio, parametros, new JRBeanCollectionDataSource(lista));
 
             JasperViewer.viewReport(print, false);
+            return true;
             //exportar pra pdf
 //            JasperExportManager.exportReportToPdfFile(print, "src/Relatorios/RelatorioEmPDF.pdf");
 //            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + ex.getMessage());
-            System.out.println(ex);
+        } catch (JRException e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + e.getMessage());
+            return false;
         }
     }
-    
 }
