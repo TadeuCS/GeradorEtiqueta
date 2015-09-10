@@ -7,6 +7,7 @@ package View;
 import Controller.FiliaisDAO;
 import Model.Filiais;
 import Util.Conexao;
+import Util.Mascaras;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -87,7 +88,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
 
         jLabel1.setText("Etiqueta:");
 
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm" }));
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm" }));
         cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tamanhoActionPerformed(evt);
@@ -177,10 +178,10 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_testar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_testar1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_testar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_gravar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -368,6 +369,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
     private void carregarCNPJ() {
         try {
             FiliaisDAO filiaisDAO=new FiliaisDAO();
+            Mascaras.setMascaraCPF(txt_cnpj, filiaisDAO.getFirst().getCgc());
             txt_cnpj.setText(filiaisDAO.getFirst().getCgc());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar o CNPJ!");

@@ -13,7 +13,6 @@ import Util.ImagemConfig;
 import Util.PropertiesManager;
 import Util.TableConfig;
 import java.awt.Event;
-import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,7 +138,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Tamanho*:");
 
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm" }));
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm" }));
         cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tamanhoActionPerformed(evt);
@@ -445,6 +444,12 @@ public class Frm_Principal extends javax.swing.JFrame {
                                 if (tipo == 3) {
                                     if (geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas) == false) {
                                         geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
+                                    }
+                                } else {
+                                    if (tipo == 4) {
+                                        if (geraRelatorios.imprimirByLista("Etiqueta 8.0x4.0.jasper", parameters, etiquetas) == false) {
+                                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x4.0.jasper", parameters, etiquetas);
+                                        }
                                     }
                                 }
                             }
