@@ -86,9 +86,9 @@
 				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##%">
-				<reportElement x="76" y="142" width="28" height="16" forecolor="#990000" uuid="7f96704d-230e-45e3-b7f6-9a447b7d67c6"/>
+				<reportElement x="75" y="142" width="31" height="16" forecolor="#990000" uuid="7f96704d-230e-45e3-b7f6-9a447b7d67c6"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PERCENT}]]></textFieldExpression>
 			</textField>
