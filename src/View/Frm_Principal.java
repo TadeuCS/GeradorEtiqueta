@@ -426,32 +426,37 @@ public class Frm_Principal extends javax.swing.JFrame {
                     }
                     props = new PropertiesManager();
                     if (tipo == 0) {
-//                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
+                        //etiqueta do Supermercado Peg Pag
                         if (geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == false) {
                             geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
                         }
                     } else {
                         parameters.put("logo", props.ler("logo"));
                         if (tipo == 1) {
+                            //etiqueta da Casa Araujo 3 colunas
                             if (geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
                             }
                         } else {
                             if (tipo == 2) {
+                                //etiqueta da Casa Araujo 2 colunas
                                 if (geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas) == false) {
                                     geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
                                 }
                             } else {
                                 if (tipo == 3) {
+                                    //etiqueta da Ayalla
                                     if (geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas) == false) {
                                         geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
                                     }
                                 } else {
                                     if (tipo == 4) {
+                                        //etiqueta da Ludyelle 1 coluna
                                         if (geraRelatorios.imprimirByLista("Etiqueta 8.0x4.0.jasper", parameters, etiquetas) == false) {
                                             geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x4.0.jasper", parameters, etiquetas);
                                         }
                                     } else {
+                                        //etiqueta da Ludyelle 2 coluna
                                         if (tipo == 5) {
                                             if (geraRelatorios.imprimirByLista("Etiqueta 8.0x7.1.jasper", parameters, etiquetas) == false) {
                                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x7.1.jasper", parameters, etiquetas);
