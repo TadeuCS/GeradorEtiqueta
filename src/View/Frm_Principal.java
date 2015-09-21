@@ -5,19 +5,24 @@
  */
 package View;
 
-import Controller.ProdutoDAO;
 import Model.Etiqueta;
-import Model.Produto;
 import Util.GeraRelatorios;
 import Util.ImagemConfig;
 import Util.PropertiesManager;
 import Util.TableConfig;
 import java.awt.Event;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -30,6 +35,9 @@ public class Frm_Principal extends javax.swing.JFrame {
     PropertiesManager props;
     ImagemConfig imagemConfig;
     List<Etiqueta> etiquetas;
+    Connection con;
+    Statement st;
+    ResultSet rs;
 
     public Frm_Principal(String filial, String Usuario) {
         initComponents();
@@ -73,11 +81,11 @@ public class Frm_Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Referência", "Descrição", "Preço", "Preço 2"
+                "Código", "Referência", "Descrição", "Preço", "Preço 2", "Estoque"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -104,6 +112,9 @@ public class Frm_Principal extends javax.swing.JFrame {
             tb_produtos.getColumnModel().getColumn(4).setMinWidth(80);
             tb_produtos.getColumnModel().getColumn(4).setPreferredWidth(80);
             tb_produtos.getColumnModel().getColumn(4).setMaxWidth(80);
+            tb_produtos.getColumnModel().getColumn(5).setMinWidth(70);
+            tb_produtos.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tb_produtos.getColumnModel().getColumn(5).setMaxWidth(70);
         }
 
         jLabel1.setText("Filtro *:");
@@ -392,14 +403,20 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void carregaProdutos() {
         try {
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            for (Produto produto : produtoDAO.listar()) {
+            st = getConexao();
+            rs = st.executeQuery("select\n"
+                    + "p.CODPROD,p.REFERENCIA,p.DESCRICAO,p.PRECO,p.PRECO2,c.ESTOQUE\n"
+                    + "from produto p\n"
+                    + "inner join compprod c on p.codprod=c.codprod order by p.descricao");
+            while (rs.next()) {
+                int estoque = (int) Double.parseDouble(rs.getString("estoque"));
                 String[] linha = new String[]{
-                    produto.getCodprod(),
-                    produto.getReferencia(),
-                    produto.getDescricao(),
-                    NumberFormat.getCurrencyInstance().format(produto.getPreco()),
-                    NumberFormat.getCurrencyInstance().format(produto.getPreco2())
+                    rs.getString("codprod"),
+                    rs.getString("referencia"),
+                    rs.getString("descricao"),
+                    NumberFormat.getCurrencyInstance().format(Double.parseDouble(rs.getString("preco"))),
+                    NumberFormat.getCurrencyInstance().format(Double.parseDouble(rs.getString("preco2"))),
+                    estoque + ""
                 };
                 TableConfig.getModel(tb_produtos).addRow(linha);
             }
@@ -539,5 +556,22 @@ public class Frm_Principal extends javax.swing.JFrame {
             cbx_tamanho.setEnabled(true);
         }
         validaTamanho(cbx_tamanho.getSelectedIndex());
+    }
+
+    public Statement getConexao() {
+        try {
+            props = new PropertiesManager();
+            Class.forName("org.firebirdsql.jdbc.FBDriver");
+            con = DriverManager.getConnection(
+                    "jdbc:firebirdsql://"
+                    + props.ler("ip") + ":3050/"
+                    + props.ler("diretorio"),
+                    "SYSDBA",
+                    "masterkey");
+            st = con.createStatement();
+            return st;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

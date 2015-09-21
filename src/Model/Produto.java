@@ -39,6 +39,8 @@ public class Produto implements Serializable {
     private Double preco;
     @Column(name = "PRECO2")
     private Double preco2;
+    @Column(name = "ESTOQUE")
+    private Double estoque;
 
     public Produto() {
     }
@@ -81,6 +83,14 @@ public class Produto implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Double getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Double estoque) {
+        this.estoque = estoque;
     }
 
     @Override
