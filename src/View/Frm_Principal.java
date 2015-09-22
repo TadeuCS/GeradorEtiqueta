@@ -14,15 +14,12 @@ import java.awt.Event;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -407,7 +404,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             rs = st.executeQuery("select\n"
                     + "p.CODPROD,p.REFERENCIA,p.DESCRICAO,p.PRECO,p.PRECO2,c.ESTOQUE\n"
                     + "from produto p\n"
-                    + "inner join compprod c on p.codprod=c.codprod order by p.descricao");
+                    + "inner join compprod c on p.codprod=c.codprod order by p.descricao,p.codprod");
             while (rs.next()) {
                 int estoque = (int) Double.parseDouble(rs.getString("estoque"));
                 String[] linha = new String[]{
