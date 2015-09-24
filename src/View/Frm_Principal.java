@@ -40,6 +40,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     public Frm_Principal(String filial, String Usuario) {
         initComponents();
         setVisible(true);
+        lb_loading.setVisible(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         etiquetas = new ArrayList<>();
         props = new PropertiesManager();
@@ -77,8 +78,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tb_produtos1 = new javax.swing.JTable();
+        lb_loading = new javax.swing.JLabel();
         btn_gerar = new javax.swing.JButton();
         lb_filial = new javax.swing.JLabel();
+        btn_limpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerador de Etiqueta 3.1");
@@ -329,6 +332,8 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addGap(11, 11, 11))
         );
 
+        lb_loading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/loading.gif"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -344,18 +349,23 @@ public class Frm_Principal extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_filtro1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_filtro1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -374,9 +384,15 @@ public class Frm_Principal extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(11, 11, 11)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
         );
 
         btn_gerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/imprimir.png"))); // NOI18N
@@ -389,6 +405,14 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         lb_filial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        btn_limpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carregar.png"))); // NOI18N
+        btn_limpar.setText("Limpar");
+        btn_limpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -400,8 +424,10 @@ public class Frm_Principal extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+                        .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_gerar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))))
         );
@@ -412,7 +438,9 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_gerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_gerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_limpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -500,6 +528,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         TableConfig.filtrar(tb_produtos1, txt_filtro1);
     }//GEN-LAST:event_txt_filtro1KeyReleased
 
+    private void btn_limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limparActionPerformed
+        etiquetas = new ArrayList<>();
+        TableConfig.limpaTabela(tb_produtos1);
+    }//GEN-LAST:event_btn_limparActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -543,6 +576,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_adicionar;
     private javax.swing.JButton btn_gerar;
+    private javax.swing.JButton btn_limpar;
     private javax.swing.JComboBox cbx_tamanho;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -559,6 +593,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lb_filial;
+    private javax.swing.JLabel lb_loading;
     private javax.swing.JLabel lb_logo;
     private javax.swing.JLabel lb_qtde;
     private javax.swing.JTable tb_produtos;
@@ -593,55 +628,79 @@ public class Frm_Principal extends javax.swing.JFrame {
     }
 
     private void gerarEtiqueta(int tipo) {
-        Map parameters = new HashMap();
-        GeraRelatorios geraRelatorios = new GeraRelatorios();
-        try {
-            props = new PropertiesManager();
-            if (tipo == 0) {
-                //etiqueta do Supermercado Peg Pag
-                if (geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == false) {
-                    geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas);
-                }
-            } else {
-                parameters.put("logo", props.ler("logo"));
-                if (tipo == 1) {
-                    //etiqueta da Casa Araujo 3 colunas
-                    if (geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == false) {
-                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
-                    }
-                } else {
-                    if (tipo == 2) {
-                        //etiqueta da Casa Araujo 2 colunas
-                        if (geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas) == false) {
-                            geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
+        Thread acao;
+        acao = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                lb_loading.setVisible(true);
+                Map parameters = new HashMap();
+                GeraRelatorios geraRelatorios = new GeraRelatorios();
+                try {
+                    props = new PropertiesManager();
+                    if (tipo == 0) {
+                        //etiqueta do Supermercado Peg Pag
+                        if (geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == false) {
+                            if (geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == true);
+                            lb_loading.setVisible(false);
+                        } else {
+                            lb_loading.setVisible(false);
                         }
                     } else {
+                        parameters.put("logo", props.ler("logo"));
+                        if (tipo == 1) {
+                            //etiqueta da Casa Araujo 3 colunas
+                            if (geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == false) {
+                                if (geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == true) {
+                                    lb_loading.setVisible(false);
+                                }
+                            } else {
+                                lb_loading.setVisible(false);
+                            }
+                        }
+                        if (tipo == 2) {
+                            //etiqueta da Casa Araujo 2 colunas
+                            if (geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas) == false) {
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
+                                lb_loading.setVisible(false);
+                            } else {
+                                lb_loading.setVisible(false);
+                            }
+                        }
                         if (tipo == 3) {
                             //etiqueta da Ayalla
                             if (geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
-                            }
-                        } else {
-                            if (tipo == 4) {
-                                //etiqueta da Ludyelle 1 coluna
-                                if (geraRelatorios.imprimirByLista("Etiqueta 8.0x4.0.jasper", parameters, etiquetas) == false) {
-                                    geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x4.0.jasper", parameters, etiquetas);
-                                }
+                                lb_loading.setVisible(false);
                             } else {
-                                //etiqueta da Ludyelle 2 coluna
-                                if (tipo == 5) {
-                                    if (geraRelatorios.imprimirByLista("Etiqueta 8.0x7.1.jasper", parameters, etiquetas) == false) {
-                                        geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x7.1.jasper", parameters, etiquetas);
-                                    }
-                                }
+                                lb_loading.setVisible(false);
+                            }
+                        }
+                        if (tipo == 4) {
+                            //etiqueta da Ludyelle 1 coluna
+                            if (geraRelatorios.imprimirByLista("Etiqueta 8.0x4.0.jasper", parameters, etiquetas) == false) {
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x4.0.jasper", parameters, etiquetas);
+                                lb_loading.setVisible(false);
+                            } else {
+                                lb_loading.setVisible(false);
+                            }
+                        }
+                        //etiqueta da Ludyelle 2 coluna
+                        if (tipo == 5) {
+                            if (geraRelatorios.imprimirByLista("Etiqueta 8.0x7.1.jasper", parameters, etiquetas) == false) {
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x7.1.jasper", parameters, etiquetas);
+                                lb_loading.setVisible(false);
+                            } else {
+                                lb_loading.setVisible(false);
                             }
                         }
                     }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao gerar a etiqueta!\n" + e);
                 }
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar a etiqueta!\n" + e);
         }
+        );
+        acao.start();
     }
 
     private void buscaDiretorio() {

@@ -1,7 +1,9 @@
 package Util;
 
 import Model.Etiqueta;
+import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -87,20 +90,34 @@ public class GeraRelatorios {
         }
     }
 
-    public boolean imprimirByLista(String caminhoDoRelatorio, Map parametros, List<Etiqueta> lista) {
+    public boolean imprimirByLista(String caminhoDoRelatorio, Map parametros, List<Etiqueta> etiquetas) {
         try {
             //compilação do JRXML
 //            JasperReport report = JasperCompileManager.compileReport(caminhoDoRelatorio);
 
             //preenchimento do relatório
             //JRBeanCollectionDataSource 
-            JasperPrint print = JasperFillManager.fillReport(caminhoDoRelatorio, parametros, new JRBeanCollectionDataSource(lista));
+            JasperPrint print = JasperFillManager.fillReport(caminhoDoRelatorio, parametros, new JRBeanCollectionDataSource(etiquetas));
 
-            JasperViewer.viewReport(print, false);
-            return true;
+            if (print == null) {
+                JOptionPane.showMessageDialog(null, "Falha ao criar o relatório", "Erro Relatorio", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else {
+                // verifica se tem alguma página  
+                if (print.getPages().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Não há conteúdo no relatório. A visualização foi cancelada", "Relatório vazio", JOptionPane.INFORMATION_MESSAGE);
+                    return false;
+                } else {
+                    JasperViewer jv = new JasperViewer(print, false);
+                    jv.setVisible(true);
+                    jv.setTitle("Pedido Personalizado");
+                    jv.setIconImage(null);
+                    return true;
+                }
+            }
+
             //exportar pra pdf
-//            JasperExportManager.exportReportToPdfFile(print, "src/Relatorios/RelatorioEmPDF.pdf");
-//            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
+            //            JasperExportManager.exportReportToPdfFile(print, "src/Relatorios/RelatorioEmPDF.pdf");
         } catch (JRException e) {
 //            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + e.getMessage());
             return false;
