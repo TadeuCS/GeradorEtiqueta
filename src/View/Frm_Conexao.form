@@ -184,7 +184,7 @@
                 <StringItem index="2" value="  9.6 cm X 8.2 cm"/>
                 <StringItem index="3" value="  8.5 cm X 7.5 cm"/>
                 <StringItem index="4" value="  8.0 cm X 4.0 cm"/>
-                <StringItem index="5" value="  8.0 cm X 7.1 cm"/>
+                <StringItem index="5" value="  8.0 cm X 7.0 cm"/>
               </StringArray>
             </Property>
           </Properties>
