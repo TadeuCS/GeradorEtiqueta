@@ -88,7 +88,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
 
         jLabel1.setText("Etiqueta:");
 
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm" }));
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm", "  6.5 cm X 2.5 cm" }));
         cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tamanhoActionPerformed(evt);
@@ -353,6 +353,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
             return null;
         }
     }
+    
     private void buscaImagem() {
         JFileChooser c = new JFileChooser();
         c.showOpenDialog(this);//abre o arquivo  

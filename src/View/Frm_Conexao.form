@@ -178,13 +178,14 @@
         <Component class="javax.swing.JComboBox" name="cbx_tamanho">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
+              <StringArray count="7">
                 <StringItem index="0" value="10.5 cm X 3.0 cm"/>
                 <StringItem index="1" value="11.1 cm X 7.4 cm"/>
                 <StringItem index="2" value="  9.6 cm X 8.2 cm"/>
                 <StringItem index="3" value="  8.5 cm X 7.5 cm"/>
                 <StringItem index="4" value="  8.0 cm X 4.0 cm"/>
                 <StringItem index="5" value="  8.0 cm X 7.0 cm"/>
+                <StringItem index="6" value="  6.5 cm X 2.5 cm"/>
               </StringArray>
             </Property>
           </Properties>

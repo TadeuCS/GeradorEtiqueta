@@ -52,8 +52,10 @@ public class Frm_Login extends javax.swing.JFrame {
                     dispose();
                 } catch (NoResultException e) {
                     JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
+                    System.out.println(e);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Você não tem permissão para acessar o aplicativo!");
+                    System.out.println(e);
                 }
             }
         } else {

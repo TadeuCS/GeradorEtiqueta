@@ -152,7 +152,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Tamanho*:");
 
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm" }));
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm", "  6.5 cm X 2.5 cm" }));
         cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tamanhoActionPerformed(evt);
@@ -361,7 +361,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,7 +424,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -531,6 +531,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void btn_limparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limparActionPerformed
         etiquetas = new ArrayList<>();
         TableConfig.limpaTabela(tb_produtos1);
+        lb_qtde.setText(tb_produtos1.getRowCount() + "");
     }//GEN-LAST:event_btn_limparActionPerformed
 
     /**
@@ -688,6 +689,15 @@ public class Frm_Principal extends javax.swing.JFrame {
                         if (tipo == 5) {
                             if (geraRelatorios.imprimirByLista("Etiqueta 8.0x7.0.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x7.0.jasper", parameters, etiquetas);
+                                lb_loading.setVisible(false);
+                            } else {
+                                lb_loading.setVisible(false);
+                            }
+                        }
+                        //etiqueta da Ludyelle 2 coluna
+                        if (tipo == 6) {
+                            if (geraRelatorios.imprimirByLista("Etiqueta 6.5 x 2.5.jasper", parameters, etiquetas) == false) {
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 6.5 x 2.5.jasper", parameters, etiquetas);
                                 lb_loading.setVisible(false);
                             } else {
                                 lb_loading.setVisible(false);
