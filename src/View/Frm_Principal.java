@@ -611,7 +611,8 @@ public class Frm_Principal extends javax.swing.JFrame {
             rs = st.executeQuery("select\n"
                     + "p.CODPROD,p.DESCRICAO,p.PRECO,p.PRECO2,c.ESTOQUE\n"
                     + "from produto p\n"
-                    + "inner join compprod c on p.codprod=c.codprod order by p.descricao,p.codprod");
+                    + "inner join compprod c on p.codprod=c.codprod "
+                    + "order by p.descricao,p.codprod");
             while (rs.next()) {
                 int estoque = (int) Double.parseDouble(rs.getString("estoque"));
                 String[] linha = new String[]{
