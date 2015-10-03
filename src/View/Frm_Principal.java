@@ -612,7 +612,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                     + "p.CODPROD,p.DESCRICAO,p.PRECO,p.PRECO2,c.ESTOQUE\n"
                     + "from produto p\n"
                     + "inner join compprod c on p.codprod=c.codprod "
-                    + "order by p.descricao,p.codprod");
+                    + "order by p.codprod");
             while (rs.next()) {
                 int estoque = (int) Double.parseDouble(rs.getString("estoque"));
                 String[] linha = new String[]{
