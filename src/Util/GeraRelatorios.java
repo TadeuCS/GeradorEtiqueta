@@ -115,7 +115,6 @@ public class GeraRelatorios {
                     return true;
                 }
             }
-
             //exportar pra pdf
             //            JasperExportManager.exportReportToPdfFile(print, "src/Relatorios/RelatorioEmPDF.pdf");
         } catch (JRException e) {

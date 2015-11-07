@@ -26,7 +26,7 @@
 				<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="0" y="30" width="154" height="37" uuid="b2a33495-6d67-4d46-9644-d02a84336c64"/>
+				<reportElement x="14" y="31" width="125" height="32" uuid="31eba540-a843-40dd-9f08-d3c6e86195eb"/>
 				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
 					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
 				</jr:EAN13>

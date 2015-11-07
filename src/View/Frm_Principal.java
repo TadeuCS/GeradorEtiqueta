@@ -119,9 +119,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tb_produtos);
         if (tb_produtos.getColumnModel().getColumnCount() > 0) {
-            tb_produtos.getColumnModel().getColumn(0).setMinWidth(80);
-            tb_produtos.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tb_produtos.getColumnModel().getColumn(0).setMaxWidth(80);
+            tb_produtos.getColumnModel().getColumn(0).setMinWidth(65);
+            tb_produtos.getColumnModel().getColumn(0).setPreferredWidth(65);
+            tb_produtos.getColumnModel().getColumn(0).setMaxWidth(65);
             tb_produtos.getColumnModel().getColumn(1).setMinWidth(110);
             tb_produtos.getColumnModel().getColumn(1).setPreferredWidth(110);
             tb_produtos.getColumnModel().getColumn(1).setMaxWidth(110);
@@ -355,28 +355,28 @@ public class Frm_Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(165, 165, 165)
+                        .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_filtro1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72)
+                        .addComponent(txt_filtro1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -723,6 +723,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Erro ao gerar a etiqueta!\n" + e);
+                    lb_loading.setVisible(false);
                 }
             }
         }
@@ -755,15 +756,15 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private Etiqueta getProduto() {
         Etiqueta etiqueta = new Etiqueta();
-        double preco = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
-        double preco2 = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
+        double preco = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
+        double preco2 = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
         double percentual = 100 - (preco * 100) / preco2;
         double diferenca = preco2 - preco;
         double parcela = preco2 / Integer.parseInt(txt_qtdeParcelas.getText());
 
-        etiqueta.setDESCRICAO(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
+        etiqueta.setDESCRICAO(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString());
         etiqueta.setNumParcelas(Integer.parseInt(txt_qtdeParcelas.getText()));
-        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
+        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
         etiqueta.setPRECO(NumberFormat.getCurrencyInstance().format(preco));
         etiqueta.setPRECO2(NumberFormat.getCurrencyInstance().format(preco2));
         etiqueta.setPERCENT(percentual);
@@ -818,16 +819,17 @@ public class Frm_Principal extends javax.swing.JFrame {
         try {
             String[] linha = new String[]{
                 tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString(),
-                tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString(),
                 tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString(),
-                tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString()
             };
             for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
                 etiquetas.add(getProduto());
                 TableConfig.getModel(tb_produtos1).addRow(linha);
             }
-//            TableConfig.getModel(tb_produtos).removeRow(tb_produtos.getSelectedRow());
             limpaCampos();
+            if(cbx_tamanho.getSelectedIndex()==0){
+            txt_qtdeParcelas.setText("0");
+            txt_qtdeEtiquedas.setText("1");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         } finally {
