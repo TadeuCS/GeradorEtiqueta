@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 public class Frm_Principal extends javax.swing.JFrame {
 
     PropertiesManager props;
-    ImagemConfig imagemConfig;
+
     List<Etiqueta> etiquetas;
     Connection con;
     Statement st;
@@ -44,10 +44,8 @@ public class Frm_Principal extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         etiquetas = new ArrayList<>();
         props = new PropertiesManager();
-        validaUsuarioLogado(Usuario);
         lb_filial.setText(filial);
         carregaProdutos();
-        carregaLogo(props.ler("logo"));
     }
 
     @SuppressWarnings("unchecked")
@@ -59,10 +57,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         tb_produtos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txt_filtro = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        lb_logo = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        cbx_tamanho = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txt_qtdeParcelas = new javax.swing.JTextField();
@@ -138,52 +132,6 @@ public class Frm_Principal extends javax.swing.JFrame {
                 txt_filtroKeyReleased(evt);
             }
         });
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        lb_logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_logo.setText("LOGO");
-        lb_logo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lb_logo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lb_logoMousePressed(evt);
-            }
-        });
-
-        jLabel4.setText("Tamanho*:");
-
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm", "  6.5 cm X 2.5 cm" }));
-        cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_tamanhoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_tamanho, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lb_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap())
-        );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Parâmetros"));
         jPanel3.setToolTipText("");
@@ -312,13 +260,15 @@ public class Frm_Principal extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 10, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,30 +292,29 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96)
+                        .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 128, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_filtro1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(72, 72, 72)
+                                .addComponent(txt_filtro1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lb_loading, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(lb_qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -382,7 +331,6 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -424,7 +372,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
+                        .addComponent(lb_filial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -450,24 +398,17 @@ public class Frm_Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_gerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerarActionPerformed
-        gerarEtiqueta(cbx_tamanho.getSelectedIndex());
+        props = new PropertiesManager();
+        gerarEtiqueta(Integer.parseInt(props.ler("etiqueta")));
     }//GEN-LAST:event_btn_gerarActionPerformed
 
     private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
         TableConfig.filtrar(tb_produtos, txt_filtro);
     }//GEN-LAST:event_txt_filtroKeyReleased
 
-    private void lb_logoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_logoMousePressed
-        buscaDiretorio();
-    }//GEN-LAST:event_lb_logoMousePressed
-
-    private void cbx_tamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tamanhoActionPerformed
-        validaTamanho(cbx_tamanho.getSelectedIndex());
-    }//GEN-LAST:event_cbx_tamanhoActionPerformed
-
     private void tb_produtosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_produtosKeyPressed
         if (evt.getKeyCode() == Event.ENTER) {
-            cbx_tamanho.requestFocus();
+            txt_qtdeParcelas.requestFocus();
         }
     }//GEN-LAST:event_tb_produtosKeyPressed
 
@@ -578,24 +519,20 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_adicionar;
     private javax.swing.JButton btn_gerar;
     private javax.swing.JButton btn_limpar;
-    private javax.swing.JComboBox cbx_tamanho;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lb_filial;
     private javax.swing.JLabel lb_loading;
-    private javax.swing.JLabel lb_logo;
     private javax.swing.JLabel lb_qtde;
     private javax.swing.JTable tb_produtos;
     private javax.swing.JTable tb_produtos1;
@@ -642,98 +579,55 @@ public class Frm_Principal extends javax.swing.JFrame {
                         //etiqueta do Supermercado Peg Pag
                         if (geraRelatorios.imprimirByLista("Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == false) {
                             if (geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 10.5x3.0.jasper", parameters, etiquetas) == true);
-                            lb_loading.setVisible(false);
-                        } else {
-                            lb_loading.setVisible(false);
                         }
                     } else {
                         parameters.put("logo", props.ler("logo"));
                         if (tipo == 1) {
                             //etiqueta da Casa Araujo 3 colunas
                             if (geraRelatorios.imprimirByLista("Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == false) {
-                                if (geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas) == true) {
-                                    lb_loading.setVisible(false);
-                                }
-                            } else {
-                                lb_loading.setVisible(false);
+                                geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 11.1x7.4.jasper", parameters, etiquetas);
                             }
                         }
                         if (tipo == 2) {
                             //etiqueta da Casa Araujo 2 colunas
                             if (geraRelatorios.imprimirByLista("Etiqueta 9.6x8.2.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 9.6x8.2.jasper", parameters, etiquetas);
-                                lb_loading.setVisible(false);
-                            } else {
-                                lb_loading.setVisible(false);
                             }
                         }
                         if (tipo == 3) {
                             //etiqueta da Ayalla
                             if (geraRelatorios.imprimirByLista("Etiqueta 8.5x7.5.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.5x7.5.jasper", parameters, etiquetas);
-                                lb_loading.setVisible(false);
-                            } else {
-                                lb_loading.setVisible(false);
                             }
                         }
                         if (tipo == 4) {
                             //etiqueta da Ludyelle 1 coluna
                             if (geraRelatorios.imprimirByLista("Etiqueta 8.0x4.0.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x4.0.jasper", parameters, etiquetas);
-                                lb_loading.setVisible(false);
-                            } else {
-                                lb_loading.setVisible(false);
                             }
                         }
                         //etiqueta da Ludyelle 2 coluna
                         if (tipo == 5) {
                             if (geraRelatorios.imprimirByLista("Etiqueta 8.0x7.0.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 8.0x7.0.jasper", parameters, etiquetas);
-                                lb_loading.setVisible(false);
-                            } else {
-                                lb_loading.setVisible(false);
                             }
                         }
                         //etiqueta da Ludyelle 2 coluna
                         if (tipo == 6) {
                             if (geraRelatorios.imprimirByLista("Etiqueta 6.5 x 2.5.jasper", parameters, etiquetas) == false) {
                                 geraRelatorios.imprimirByLista("src/Relatorios/Etiqueta 6.5 x 2.5.jasper", parameters, etiquetas);
-                                lb_loading.setVisible(false);
-                            } else {
-                                lb_loading.setVisible(false);
                             }
                         }
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Erro ao gerar a etiqueta!\n" + e);
+                } finally {
+                    lb_loading.setVisible(false);
                 }
             }
         }
         );
         acao.start();
-    }
-
-    private void buscaDiretorio() {
-        JFileChooser fileChooser = new JFileChooser();
-        props = new PropertiesManager();
-        imagemConfig = new ImagemConfig();
-        int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.CANCEL_OPTION) {
-        } else {
-            String file = fileChooser.getSelectedFile().getPath();
-            props.altera("logo", file);
-            carregaLogo(file);
-        }
-    }
-
-    private void carregaLogo(String caminho) {
-        try {
-            lb_logo.setText("");
-            imagemConfig = new ImagemConfig();
-            imagemConfig.carregaImagem(lb_logo, caminho, lb_logo.getWidth());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar a Logo!\n" + e);
-        }
     }
 
     private Etiqueta getProduto() {
@@ -770,16 +664,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         }
     }
 
-    private void validaUsuarioLogado(String Usuario) {
-        if (Usuario.equals("MESTRE") == true) {
-            cbx_tamanho.setSelectedIndex(Integer.parseInt(props.ler("etiqueta")));
-            cbx_tamanho.setEnabled(false);
-        } else {
-            cbx_tamanho.setEnabled(true);
-        }
-        validaTamanho(cbx_tamanho.getSelectedIndex());
-    }
-
     public Statement getConexao() {
         try {
             props = new PropertiesManager();
@@ -809,7 +693,6 @@ public class Frm_Principal extends javax.swing.JFrame {
                 etiquetas.add(getProduto());
                 TableConfig.getModel(tb_produtos1).addRow(linha);
             }
-//            TableConfig.getModel(tb_produtos).removeRow(tb_produtos.getSelectedRow());
             limpaCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

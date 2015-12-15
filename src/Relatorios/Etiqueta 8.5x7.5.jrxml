@@ -15,13 +15,6 @@
 	<detail>
 		<band height="178" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="7" y="112" width="17" height="10" uuid="033dd7d0-774c-43cf-bb59-de2e1a7c6d2e"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="6" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Ref:]]></text>
-			</staticText>
-			<staticText>
 				<reportElement mode="Opaque" x="4" y="168" width="57" height="9" uuid="8df26bd2-e6e4-4675-8483-fb2fdc07a24c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="5" isBold="false" isUnderline="false" isStrikeThrough="false"/>
@@ -39,19 +32,6 @@
 				</textElement>
 				<text><![CDATA[X]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="25" y="112" width="75" height="10" uuid="191c1b4e-9e88-46cf-bf04-18adfdbfea7d"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{REFERENCIA}]]></textFieldExpression>
-			</textField>
-			<componentElement>
-				<reportElement x="7" y="99" width="93" height="14" uuid="2ae1bdfc-a1bf-4be9-ad4b-3f63267fdf3b"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
-					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
-				</jr:barbecue>
-			</componentElement>
 			<textField>
 				<reportElement x="54" y="138" width="46" height="10" uuid="a8a85f32-172a-4397-9015-90fa8bb0a187"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -123,10 +103,10 @@
 				<text><![CDATA[Fone: (34) 3825-5568]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="5" y="76" width="95" height="20" uuid="0a8d9094-3a94-4b80-977c-e741ada297bd"/>
+				<reportElement x="5" y="76" width="95" height="15" uuid="0a8d9094-3a94-4b80-977c-e741ada297bd"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="5" y="76" width="95" height="20" uuid="b55bf3ce-5d05-41d7-ba4e-a7bc4cfb70a6"/>
+				<reportElement x="5" y="76" width="95" height="15" uuid="b55bf3ce-5d05-41d7-ba4e-a7bc4cfb70a6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="5" isBold="true"/>
 				</textElement>
@@ -138,6 +118,19 @@
 					<font fontName="Arial" size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="6" y="93" width="95" height="16" uuid="4631acb9-fcb6-45ed-8e22-f7b78e45d852"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false" barWidth="3">
+					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="6" y="109" width="95" height="7" uuid="7bdb972f-3415-4985-9a1a-c4f815cd3d3d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REFERENCIA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

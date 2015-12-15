@@ -119,7 +119,7 @@ public class GeraRelatorios {
             //exportar pra pdf
             //            JasperExportManager.exportReportToPdfFile(print, "src/Relatorios/RelatorioEmPDF.pdf");
         } catch (JRException e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + e.getMessage());
+//            System.out.println("Erro ao gerar o relatório:\n"+e);
             return false;
         }
     }

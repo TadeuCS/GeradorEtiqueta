@@ -5,8 +5,8 @@
 package View;
 
 import Controller.FiliaisDAO;
-import Model.Filiais;
 import Util.Conexao;
+import Util.ImagemConfig;
 import Util.Mascaras;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -29,6 +29,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
     static Statement st;
     static Connection con;
     PrintWriter pw;
+    ImagemConfig imagemConfig;
     PropertiesManager props;
     Conexao conexao;
     String diretorio;
@@ -37,6 +38,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         carregaDados();
+        cbx_tamanho.setSelectedIndex(Integer.parseInt(props.ler("etiqueta")));
     }
 
     @SuppressWarnings("unchecked")
@@ -48,36 +50,30 @@ public class Frm_Conexao extends javax.swing.JFrame {
         txt_ip = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_banco = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txt_cnpj = new javax.swing.JFormattedTextField();
         btn_buscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cbx_tamanho = new javax.swing.JComboBox();
-        btn_testar = new javax.swing.JButton();
-        btn_gravar = new javax.swing.JButton();
         status = new javax.swing.JLabel();
+        btn_testar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        cbx_tamanho = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        txt_cnpj = new javax.swing.JFormattedTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lb_logo = new javax.swing.JLabel();
         btn_testar1 = new javax.swing.JButton();
+        btn_gravar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuração de Conexão");
 
-        pnl_fundo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnl_fundo.setBorder(javax.swing.BorderFactory.createTitledBorder("Conexão com Banco de dados"));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("IP:");
+        jLabel2.setText("Servidor*:");
 
         txt_ip.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel3.setText("Banco *:");
-
-        jLabel6.setText("CNPJ*:");
-
-        try {
-            txt_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txt_cnpj.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         btn_buscar.setText("...");
         btn_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -86,61 +82,9 @@ public class Frm_Conexao extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Etiqueta:");
-
-        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm", "  6.5 cm X 2.5 cm" }));
-        cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_tamanhoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
-        pnl_fundo.setLayout(pnl_fundoLayout);
-        pnl_fundoLayout.setHorizontalGroup(
-            pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_fundoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_fundoLayout.createSequentialGroup()
-                        .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnl_fundoLayout.createSequentialGroup()
-                        .addComponent(txt_banco)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        pnl_fundoLayout.setVerticalGroup(
-            pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_fundoLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txt_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(11, 11, 11))
-        );
+        status.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        status.setForeground(new java.awt.Color(0, 51, 153));
+        status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         btn_testar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/executar.png"))); // NOI18N
         btn_testar.setText("Testar");
@@ -150,22 +94,132 @@ public class Frm_Conexao extends javax.swing.JFrame {
             }
         });
 
-        btn_gravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salvar.png"))); // NOI18N
-        btn_gravar.setText("Gravar");
-        btn_gravar.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
+        pnl_fundo.setLayout(pnl_fundoLayout);
+        pnl_fundoLayout.setHorizontalGroup(
+            pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_fundoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addComponent(txt_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_banco))
+                    .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_testar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6))
+        );
+        pnl_fundoLayout.setVerticalGroup(
+            pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_fundoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(btn_testar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addComponent(txt_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txt_ip, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(46, 46, 46)))
+                .addContainerGap())
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Parâmetros"));
+
+        cbx_tamanho.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10.5 cm X 3.0 cm", "11.1 cm X 7.4 cm", "  9.6 cm X 8.2 cm", "  8.5 cm X 7.5 cm", "  8.0 cm X 4.0 cm", "  8.0 cm X 7.0 cm", "  6.5 cm X 2.5 cm" }));
+        cbx_tamanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_gravarActionPerformed(evt);
+                cbx_tamanhoActionPerformed(evt);
             }
         });
 
-        status.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
-        status.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel1.setText("Etiqueta:");
+
+        try {
+            txt_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_cnpj.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel6.setText("CNPJ*:");
+
+        lb_logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_logo.setText("LOGO");
+        lb_logo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lb_logo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_logoMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(lb_logo);
 
         btn_testar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carregar.png"))); // NOI18N
         btn_testar1.setText("Carregar");
         btn_testar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_testar1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(btn_testar1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_testar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbx_tamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(125, 125, 125))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+
+        btn_gravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salvar.png"))); // NOI18N
+        btn_gravar.setText("Gravar");
+        btn_gravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gravarActionPerformed(evt);
             }
         });
 
@@ -176,14 +230,10 @@ public class Frm_Conexao extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_testar1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_testar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(pnl_fundo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_gravar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -192,14 +242,10 @@ public class Frm_Conexao extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_fundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_testar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_gravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btn_testar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btn_gravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -225,6 +271,10 @@ public class Frm_Conexao extends javax.swing.JFrame {
 
     private void cbx_tamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tamanhoActionPerformed
     }//GEN-LAST:event_cbx_tamanhoActionPerformed
+
+    private void lb_logoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_logoMousePressed
+        buscaDiretorio();
+    }//GEN-LAST:event_lb_logoMousePressed
 
     /**
      * @param args the command line arguments
@@ -278,6 +328,9 @@ public class Frm_Conexao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_logo;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JLabel status;
     private javax.swing.JTextField txt_banco;
@@ -291,6 +344,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
         txt_ip.setText(props.ler("ip"));
         txt_cnpj.setText(props.ler("cnpj"));
         cbx_tamanho.setSelectedIndex(Integer.parseInt(props.ler("etiqueta")));
+        carregaLogo(props.ler("logo"));
     }
 
     private void validaCampos() {
@@ -324,7 +378,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
                 props = new PropertiesManager();
                 props.altera("ip", txt_ip.getText());
                 props.altera("diretorio", txt_banco.getText());
-                props.altera("etiqueta", cbx_tamanho.getSelectedIndex()+"");
+                props.altera("etiqueta", cbx_tamanho.getSelectedIndex() + "");
                 if (!txt_cnpj.getText().replace(".", "").replace("/", "").replace("-", "").trim().isEmpty()) {
                     props.altera("cnpj", txt_cnpj.getText());
                 }
@@ -353,7 +407,7 @@ public class Frm_Conexao extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     private void buscaImagem() {
         JFileChooser c = new JFileChooser();
         c.showOpenDialog(this);//abre o arquivo  
@@ -369,11 +423,36 @@ public class Frm_Conexao extends javax.swing.JFrame {
 
     private void carregarCNPJ() {
         try {
-            FiliaisDAO filiaisDAO=new FiliaisDAO();
+            FiliaisDAO filiaisDAO = new FiliaisDAO();
             Mascaras.setMascaraCPF(txt_cnpj, filiaisDAO.getFirst().getCgc());
             txt_cnpj.setText(filiaisDAO.getFirst().getCgc());
+            JOptionPane.showMessageDialog(null, "CNPJ localizado com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar o CNPJ!");
         }
     }
+
+    private void buscaDiretorio() {
+        JFileChooser fileChooser = new JFileChooser();
+        props = new PropertiesManager();
+        imagemConfig = new ImagemConfig();
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.CANCEL_OPTION) {
+        } else {
+            String file = fileChooser.getSelectedFile().getPath();
+            props.altera("logo", file);
+            carregaLogo(file);
+        }
+    }
+
+    private void carregaLogo(String caminho) {
+        try {
+            lb_logo.setText("");
+            imagemConfig = new ImagemConfig();
+            imagemConfig.carregaImagem(lb_logo, caminho, lb_logo.getWidth());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar a Logo!\n" + e);
+        }
+    }
+
 }
