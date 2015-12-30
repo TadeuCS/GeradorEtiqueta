@@ -1,9 +1,6 @@
 package Util;
 
 import Model.Etiqueta;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
-import javax.imageio.ImageIO;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -19,7 +15,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -110,7 +105,7 @@ public class GeraRelatorios {
                 } else {
                     JasperViewer jv = new JasperViewer(print, false);
                     jv.setVisible(true);
-                    jv.setTitle("Pedido Personalizado");
+                    jv.setTitle("Etiqueta Personalizada");
                     jv.setIconImage(null);
                     return true;
                 }
