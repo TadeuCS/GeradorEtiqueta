@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etiqueta Peg Pag" language="groovy" pageWidth="320" pageHeight="113" columnWidth="280" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="5" isIgnorePagination="true" uuid="3bf98fee-22a5-4fb7-8856-ae29a915c196">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etiqueta Peg Pag" language="groovy" pageWidth="283" pageHeight="99" columnWidth="243" leftMargin="20" rightMargin="20" topMargin="4" bottomMargin="5" isIgnorePagination="true" uuid="3bf98fee-22a5-4fb7-8856-ae29a915c196">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -8,22 +8,29 @@
 	</queryString>
 	<field name="PRECO" class="java.lang.String"/>
 	<field name="DESCRICAO" class="java.lang.String"/>
+	<field name="REFERENCIA" class="java.lang.String"/>
 	<detail>
 		<band height="67" splitType="Immediate">
 			<textField>
-				<reportElement x="0" y="38" width="280" height="29" uuid="f1f13f35-8118-4a0f-b23f-90482e02e790"/>
+				<reportElement x="113" y="26" width="130" height="41" uuid="f1f13f35-8118-4a0f-b23f-90482e02e790"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="22" isBold="true"/>
+					<font fontName="Arial" size="24" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PRECO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="280" height="38" uuid="67acbe55-10eb-4312-89ab-001d6504d6d0"/>
+				<reportElement x="0" y="0" width="243" height="26" uuid="67acbe55-10eb-4312-89ab-001d6504d6d0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
 			</textField>
+			<componentElement>
+				<reportElement x="0" y="26" width="113" height="41" uuid="8fa53d27-ba76-4f0e-bcfc-f751eb53298a"/>
+				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$F{REFERENCIA}]]></jr:codeExpression>
+				</jr:EAN13>
+			</componentElement>
 		</band>
 	</detail>
 </jasperReport>

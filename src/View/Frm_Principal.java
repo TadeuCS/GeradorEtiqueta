@@ -7,7 +7,6 @@ package View;
 
 import Model.Etiqueta;
 import Util.GeraRelatorios;
-import Util.ImagemConfig;
 import Util.PropertiesManager;
 import Util.TableConfig;
 import java.awt.Event;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -44,6 +42,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         etiquetas = new ArrayList<>();
         props = new PropertiesManager();
+        trataFrameByEtiqueta(props);
         lb_filial.setText(filial);
         carregaProdutos();
     }
@@ -87,11 +86,11 @@ public class Frm_Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Descrição", "Preço", "Preço 2", "Estoque"
+                "Código", "Referência", "Descrição", "Preço", "Preço 2", "Estoque"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -111,18 +110,21 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tb_produtos);
         if (tb_produtos.getColumnModel().getColumnCount() > 0) {
-            tb_produtos.getColumnModel().getColumn(0).setMinWidth(80);
-            tb_produtos.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tb_produtos.getColumnModel().getColumn(0).setMaxWidth(80);
-            tb_produtos.getColumnModel().getColumn(2).setMinWidth(80);
-            tb_produtos.getColumnModel().getColumn(2).setPreferredWidth(80);
-            tb_produtos.getColumnModel().getColumn(2).setMaxWidth(80);
+            tb_produtos.getColumnModel().getColumn(0).setMinWidth(65);
+            tb_produtos.getColumnModel().getColumn(0).setPreferredWidth(65);
+            tb_produtos.getColumnModel().getColumn(0).setMaxWidth(65);
+            tb_produtos.getColumnModel().getColumn(1).setMinWidth(100);
+            tb_produtos.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tb_produtos.getColumnModel().getColumn(1).setMaxWidth(100);
             tb_produtos.getColumnModel().getColumn(3).setMinWidth(80);
             tb_produtos.getColumnModel().getColumn(3).setPreferredWidth(80);
             tb_produtos.getColumnModel().getColumn(3).setMaxWidth(80);
-            tb_produtos.getColumnModel().getColumn(4).setMinWidth(70);
-            tb_produtos.getColumnModel().getColumn(4).setPreferredWidth(70);
-            tb_produtos.getColumnModel().getColumn(4).setMaxWidth(70);
+            tb_produtos.getColumnModel().getColumn(4).setMinWidth(80);
+            tb_produtos.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tb_produtos.getColumnModel().getColumn(4).setMaxWidth(80);
+            tb_produtos.getColumnModel().getColumn(5).setMinWidth(70);
+            tb_produtos.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tb_produtos.getColumnModel().getColumn(5).setMaxWidth(70);
         }
 
         jLabel1.setText("Filtro *:");
@@ -302,7 +304,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 128, Short.MAX_VALUE))
+                                .addGap(0, 269, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -408,8 +410,17 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void tb_produtosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_produtosKeyPressed
         if (evt.getKeyCode() == Event.ENTER) {
-            txt_qtdeParcelas.requestFocus();
+            props = new PropertiesManager();
+            if (props.ler("etiqueta").equals("0") == true) {
+                txt_qtdeEtiquedas.setText("1");
+                txt_qtdeParcelas.setText("1");
+                btn_adicionar.doClick();
+                tb_produtos.requestFocus();
+            } else {
+                txt_qtdeParcelas.requestFocus();
+            }
         }
+
     }//GEN-LAST:event_tb_produtosKeyPressed
 
     private void txt_qtdeParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_qtdeParcelasKeyPressed
@@ -460,7 +471,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_adicionarActionPerformed
 
     private void tb_produtosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_produtosMousePressed
-        if (tb_produtos.getSelectedRowCount() == 1) {
+        if (props.ler("etiqueta").equals("0") == false) {
             txt_qtdeParcelas.requestFocus();
         }
     }//GEN-LAST:event_tb_produtosMousePressed
@@ -546,13 +557,14 @@ public class Frm_Principal extends javax.swing.JFrame {
         try {
             st = getConexao();
             rs = st.executeQuery("select\n"
-                    + "p.CODPROD,p.DESCRICAO,p.PRECO,p.PRECO2,c.ESTOQUE\n"
+                    + "p.CODPROD,p.referencia,p.DESCRICAO,p.PRECO,p.PRECO2,c.ESTOQUE\n"
                     + "from produto p\n"
                     + "inner join compprod c on p.codprod=c.codprod order by p.descricao,p.codprod");
             while (rs.next()) {
                 int estoque = (int) Double.parseDouble(rs.getString("estoque"));
                 String[] linha = new String[]{
                     rs.getString("codprod"),
+                    rs.getString("referencia"),
                     rs.getString("descricao"),
                     NumberFormat.getCurrencyInstance().format(Double.parseDouble(rs.getString("preco"))),
                     NumberFormat.getCurrencyInstance().format(Double.parseDouble(rs.getString("preco2"))),
@@ -632,15 +644,15 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private Etiqueta getProduto() {
         Etiqueta etiqueta = new Etiqueta();
-        double preco = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
-        double preco2 = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
+        double preco = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
+        double preco2 = Double.parseDouble(tb_produtos.getValueAt(tb_produtos.getSelectedRow(),4).toString().replace("R$ ", "").replace(".", "").replace(",", "."));
         double percentual = 100 - (preco * 100) / preco2;
         double diferenca = preco2 - preco;
         double parcela = preco2 / Integer.parseInt(txt_qtdeParcelas.getText());
 
-        etiqueta.setDESCRICAO(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
+        etiqueta.setDESCRICAO(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString());
         etiqueta.setNumParcelas(Integer.parseInt(txt_qtdeParcelas.getText()));
-        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString());
+        etiqueta.setREFERENCIA(tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString());
         etiqueta.setPRECO(NumberFormat.getCurrencyInstance().format(preco));
         etiqueta.setPRECO2(NumberFormat.getCurrencyInstance().format(preco2));
         etiqueta.setPERCENT(percentual);
@@ -685,9 +697,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         try {
             String[] linha = new String[]{
                 tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 0).toString(),
-                tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 1).toString(),
                 tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 2).toString(),
-                tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString()
+                tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 3).toString(),
+                tb_produtos.getValueAt(tb_produtos.getSelectedRow(), 4).toString()
             };
             for (int i = 0; i < Integer.parseInt(txt_qtdeEtiquedas.getText()); i++) {
                 etiquetas.add(getProduto());
@@ -705,5 +717,20 @@ public class Frm_Principal extends javax.swing.JFrame {
         txt_qtdeParcelas.setText(null);
         txt_qtdeEtiquedas.setText(null);
         txt_qtdeParcelas.requestFocus();
+    }
+
+    private void trataFrameByEtiqueta(PropertiesManager props) {
+        try {
+            if (props.ler("etiqueta").equals("0") == true) {
+                txt_qtdeEtiquedas.setEnabled(false);
+                txt_qtdeParcelas.setEnabled(false);
+            } else {
+                txt_qtdeEtiquedas.setEnabled(true);
+                txt_qtdeParcelas.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        }
     }
 }
